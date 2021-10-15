@@ -4,6 +4,7 @@ from links import Link_Base
 
 
 class Filter_Base :
+    """enter the link.this class scrap the link and return a dictionary of details of movie(s) """"
     movie_specs={}
 
     def parse_page(self,url) :
