@@ -30,6 +30,7 @@ class Filter_Base :
         self.total_content=func2(func1(self.movie_content))  #uses 2 functions in parameter to finds all contents of movie
         return  self.total_content
     
+    
     def main_page(self,html_content) :
         """finds personal link of movie then goes to movie page and parses it"""
         self.movie_content=html_content
