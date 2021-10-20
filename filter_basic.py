@@ -12,25 +12,10 @@ class Filter_Base :
         self.url=url
         self.req=requests.get(self.url)
         self.parse=BeautifulSoup(self.req.text,"html.parser")
+        return self.parse
     
-    
-    def several_movie(self,func1,func2):
-        """gets 2 functions as parameter and finds all contents of some movies"""
-        self.list_movies=self.parse.find_all("div",class_="lister-item mode-advanced") #finds all movies in a page
-        for self.each_movie in self.list_movies :
-            self.movie_content=self.each_movie.find("div",class_="lister-item-content") #finds each movie part
-            self.total_content=func2(func1(self.movie_content)) #uses 2 functions in parameter to finds all contents of movies
-        return  self.total_content
+   
 
-
-    def one_movie(self,func1,func2):
-        """gets 2 functions as parameter and finds all contents of one movie"""
-        self.movie=self.parse.find("div",class_="lister-item mode-advanced")    #finds first movie
-        self.movie_content=self.movie.find("div",class_="lister-item-content")  #finds the movie part
-        self.total_content=func2(func1(self.movie_content))  #uses 2 functions in parameter to finds all contents of movie
-        return  self.total_content
-    
-    
     def main_page(self,html_content) :
         """finds personal link of movie then goes to movie page and parses it"""
         self.movie_content=html_content
@@ -41,8 +26,6 @@ class Filter_Base :
         self.req_new_page=requests.get(self.new_page_movie)
         self.parse_new_page=BeautifulSoup(self.req_new_page.text,"html.parser")
         return self.parse_new_page
-
-
 
     def movie_detail(self,page) :
         """finds all information about movie"""
@@ -105,4 +88,5 @@ class Filter_Base :
                 Filter_Base.movie_specs[self.movie_name][self.label_info]=self.content_info
         except:pass
         return  Filter_Base.movie_specs
+
 
