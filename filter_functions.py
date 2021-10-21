@@ -1,4 +1,3 @@
-# from filter_basic import Filter_Base
 from links import Link_Base
 from find_movies import Movies
 import requests

@@ -26,6 +26,7 @@ class Filter_Base :
         self.req_new_page=requests.get(self.new_page_movie)
         self.parse_new_page=BeautifulSoup(self.req_new_page.text,"html.parser")
         return self.parse_new_page
+        
 
     def movie_detail(self,page) :
         """finds all information about movie"""
