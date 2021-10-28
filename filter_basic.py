@@ -7,6 +7,9 @@ class Filter_Base :
     """it has different methods to find movies' details"""
     movie_specs={}  #save all movies with their details
 
+    def __str__(self):
+        return f"the result of Filter_Base class is :\n{Filter_Base.movie_specs}"
+
     def parse_page(self,url) :
         """parse the url and save html text"""
         self.url=url
@@ -16,9 +19,10 @@ class Filter_Base :
     
    
 
-    def main_page(self,html_content) :
-        """finds personal link of movie then goes to movie page and parses it"""
-        self.movie_content=html_content
+    def main_page(self,parse_func) :
+        """finds personal link of movie then goes to movie page and parses it
+        put parse_page as parse_func argument"""
+        self.movie_content=parse_func
         self.movie_name=self.movie_content.h3.a.text #finds the name of movie
         Filter_Base.movie_specs[self.movie_name]={} 
         self.personal_link=self.movie_content.h3.a["href"] #finds special url of movie
@@ -28,9 +32,10 @@ class Filter_Base :
         return self.parse_new_page
         
 
-    def movie_detail(self,page) :
-        """finds all information about movie"""
-        self.page=page
+    def movie_detail(self,func_page) :
+        """finds all information about movie
+        put main_page as func_page argument"""
+        self.page=func_page
         self.find_genre=self.page.find("li",{"data-testid":"storyline-genres"}) #finds genre part
         self.genre_label=self.find_genre.span.text  #finds title(genre)
         self.genre_content=[self.item.a.text for self.item in self.find_genre.find_all("li",role="presentation")]   #finds all genre types of movie
@@ -39,7 +44,7 @@ class Filter_Base :
 
         try:
             #finds runtime part
-            self.runtime_part=self.parse_link.find("section",{"data-testid":"TechSpecs"}).find("li",{"data-testid":"title-techspec_runtime"})   
+            self.runtime_part=self.page.find("section",{"data-testid":"TechSpecs"}).find("li",{"data-testid":"title-techspec_runtime"})   
             self.runtime_label=self.runtime_part.find("span",class_="ipc-metadata-list-item__label").text   #finds the title
             #finds the time of movie
             self.runtime_content=self.runtime_part.find("div",class_="ipc-metadata-list-item__content-container").find("span",class_="ipc-metadata-list-item__list-content-item").text 
@@ -47,7 +52,7 @@ class Filter_Base :
         except:pass
         try:
             #finds the rate of movie
-            self.rating_part=self.parse_link.find("div",class_="RatingBar__ButtonContainer-sc-85l9wd-1 idYUsR").find("div",class_="AggregateRatingButton__ContentWrap-sc-1ll29m0-0").span.text  
+            self.rating_part=self.page.find("div",class_="RatingBar__ButtonContainer-sc-85l9wd-1 idYUsR").find("div",class_="AggregateRatingButton__ContentWrap-sc-1ll29m0-0").span.text  
             Filter_Base.movie_specs[self.movie_name]["rating"]=self.rating_part
         except:
             pass
@@ -89,5 +94,3 @@ class Filter_Base :
                 Filter_Base.movie_specs[self.movie_name][self.label_info]=self.content_info
         except:pass
         return  Filter_Base.movie_specs
-
-

@@ -56,4 +56,3 @@ class Filters_Sub(Movies,Link_Base) :
                         self.country_brief=self.each_option["value"]    #find the abbreviation of the name of country
         self.url=Link_Base(country_name=self.country_brief,adult_limit=adult).country_url
         return self.common_part(self.url)
-

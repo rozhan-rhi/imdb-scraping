@@ -20,19 +20,21 @@ class Human_Basic:
         self.parse=BeautifulSoup(self.req.text,"html.parser")
         return self.parse
     
-    def personal_link(self):
-        """find the special link of person"""
+    def personal_link(self,common_func):
+        """find the special link of person
+        and put common_parsing function as common_func argument"""
         self.url=Links(person_name=self.name).person_url   #use person url of links_human ,search according to the name
-        self.total_page=self.common_parsing(self.url)
+        self.total_page=common_func(self.url)
         self.person_link=self.total_page.find("div",class_="lister-item-content").a["href"] #find special part of link
         return self.person_link
     
-    def personal_bio(self,func_link) :
+    def personal_bio(self,func_link,common_func) :
         """go to the personal page of person
-        put personal_link function as an func_link argument"""
-        func_link()
+        put personal_link function as an func_link argument
+        and put common_parsing function as common_func argument"""
+        func_link
         self.url=Links(special_link=self.person_link).bio_url   #use bio url of links_human 
-        self.total_page=self.common_parsing(self.url)
+        self.total_page=common_func(self.url)
         return self.total_page
 
 
@@ -88,3 +90,5 @@ class Human_Basic:
         return self.family_dict 
 
 
+obj=Human_Basic("brad pitt")
+print(obj.overview(obj.personal_bio(obj.personal_link(obj.common_parsing),obj.common_parsing)))
