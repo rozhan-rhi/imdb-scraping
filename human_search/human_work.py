@@ -21,13 +21,14 @@ class Work_Info(Human_Basic) :
         self.url=Links(special_link=self.person_link).work_url #get work url from links_human.py
         self.page=super().common_parsing(self.url)
         self.tables=self.page.find_all("div",class_="article")  #finds diffrent tables in a page
+        return self.tables
 
 
-
-    def filmography(self):
-        """finds all work experiences of person"""
-        self.common()
+    def filmography(self,common_func):
+        """finds all work experiences of person
+        put common function as common_func argument"""
         self.credit_list=[]
+        common_func()
         for self.each_table in self.tables :
             try:
                 if self.each_table.h2.text=="Filmography":  #finds filmography table
@@ -40,11 +41,12 @@ class Work_Info(Human_Basic) :
         return self.credit_list
 
 
-    def movies_work(self,job):
+    def movies_work(self,job,common_func):
         """since a person can have several jobs,you can find the movies and their release dates
-         according to any job(producer,actor,director,writer,...) of that person"""
+        according to any job(producer,actor,director,writer,...) of that person
+        put common function as common_func argument"""
         self.movies_list=[]
-        self.common()
+        common_func()
         for self.each_table in self.tables :
             try:
                 if self.each_table.h2.text=="Filmography":  #finds filmography table
@@ -60,10 +62,11 @@ class Work_Info(Human_Basic) :
 
 
 
-    def known(self):
-        """finds movies that makes person known for"""
+    def known(self,common_func):
+        """finds movies that makes person known for
+        put common function as common_func argument"""
         self.known_list=[]
-        self.common()
+        common_func()
         for self.each_table in self.tables :
             try:
                 if self.each_table.h2.text=="Known For":    #finds known for table
@@ -74,6 +77,3 @@ class Work_Info(Human_Basic) :
             except:pass
         Work_Info.work_dict[self.name]["known-for"]=self.known_list
         return self.known_list
-
-
-
