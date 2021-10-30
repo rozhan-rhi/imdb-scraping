@@ -20,31 +20,27 @@ class Human_Basic:
         self.parse=BeautifulSoup(self.req.text,"html.parser")
         return self.parse
     
-    def personal_link(self,common_func):
-        """find the special link of person
-        and put common_parsing function as common_func argument"""
+    def personal_link(self):
+        """find the special link of person"""
         self.url=Links(person_name=self.name).person_url   #use person url of links_human ,search according to the name
-        self.total_page=common_func(self.url)
+        self.total_page=self.common_parsing(self.url)
         self.person_link=self.total_page.find("div",class_="lister-item-content").a["href"] #find special part of link
         return self.person_link
     
-    def personal_bio(self,func_link,common_func) :
-        """go to the personal page of person
-        put personal_link function as an func_link argument
-        and put common_parsing function as common_func argument"""
-        func_link
+    def personal_bio(self) :
+        """go to the personal page of person"""
+        self.personal_link()
         self.url=Links(special_link=self.person_link).bio_url   #use bio url of links_human 
-        self.total_page=common_func(self.url)
+        self.total_page=self.common_parsing(self.url)
         return self.total_page
 
 
 
-    def overview(self,func_bio):
-        """find information about person itself
-        put personal_bio function as an func_bio argument"""
+    def overview(self):
+        """find information about person itself"""
         self.overview_dict={}
         self.born_list=[]
-        func_bio()
+        self.personal_bio()
         self.overview_part=self.parse.find("table",id="overviewTable").find_all("tr")   #finds different parts of overview table
         for self.each_part in self.overview_part :
             self.td_tags=self.each_part.find_all("td",class_="label")   #finds the titles of parts
@@ -62,11 +58,10 @@ class Human_Basic:
         return self.overview_dict
 
 
-    def family(self,func_bio) :
-        """finds information about the family of person
-        put personal_bio function as an func_bio argument"""
+    def family(self) :
+        """finds information about the family of person"""
         self.family_dict={}
-        func_bio()
+        self.personal_bio()
         self.family_part=self.parse.find("table",id="tableFamily").find_all("tr")   #finds different parts of family table
         for self.each_part in self.family_part :
             self.titles=self.each_part.find("td").text.strip() #finds the titles of parts
@@ -90,5 +85,4 @@ class Human_Basic:
         return self.family_dict 
 
 
-obj=Human_Basic("brad pitt")
-print(obj.overview(obj.personal_bio(obj.personal_link(obj.common_parsing),obj.common_parsing)))
+
