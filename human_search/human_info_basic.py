@@ -5,13 +5,8 @@ from links_human import Links
 class Human_Basic:
     """find all information about a person who is an actor or director or writer"""
 
-    human_dict={}
     def __init__(self,name) :
         self.name=name
-
-
-    def __str__(self) :
-        return f"the personal information of {self.name} is : \n{Human_Basic.human_dict}"
 
 
     def common_parsing(self,url):
@@ -20,12 +15,15 @@ class Human_Basic:
         self.parse=BeautifulSoup(self.req.text,"html.parser")
         return self.parse
     
+
     def personal_link(self):
         """find the special link of person"""
         self.url=Links(person_name=self.name).person_url   #use person url of links_human ,search according to the name
         self.total_page=self.common_parsing(self.url)
         self.person_link=self.total_page.find("div",class_="lister-item-content").a["href"] #find special part of link
         return self.person_link
+
+        
     
     def personal_bio(self) :
         """go to the personal page of person"""
@@ -54,8 +52,8 @@ class Human_Basic:
                 else : #for titles except born
                     self.content=self.each_part.text.replace(self.each_td.text, "").replace("\n","")  #find the content of titles
                     self.overview_dict[self.each_td.text.lower()]=self.content.encode("ascii","ignore").decode("utf-8").strip()
-        Human_Basic.human_dict["overview"]=self.overview_dict    
         return self.overview_dict
+
 
 
     def family(self) :
@@ -81,7 +79,6 @@ class Human_Basic:
                             self.content=list(filter(None,self.content)) #final content of part
                             self.family_dict[self.titles]=self.content
            
-        Human_Basic.human_dict["family"]=self.family_dict                
         return self.family_dict 
 
 

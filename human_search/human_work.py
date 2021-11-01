@@ -4,15 +4,8 @@ from links_human import Links
 class Work_Info(Human_Basic) :
     """finds information about person's work activity"""
 
-    work_dict={}
-
     def __init__(self,name):
         super().__init__(name)
-        Work_Info.work_dict[self.name]={}
-         
-
-    def __str__(self):
-        return f"the work experience of {self.name} is : \n{Work_Info.work_dict}"
 
 
     def common(self) :
@@ -24,12 +17,11 @@ class Work_Info(Human_Basic) :
         return self.tables
 
 
-    def filmography(self,common_func):
-        """finds all work experiences of person
-        put common function as common_func argument"""
+    def filmography(self):
+        """finds all work experiences of person"""
         self.credit_list=[]
-        common_func()
-        for self.each_table in self.tables :
+        self.common_tables=self.common()
+        for self.each_table in self.common_tables :
             try:
                 if self.each_table.h2.text=="Filmography":  #finds filmography table
                     for self.each_part in self.each_table.find_all("div",class_="head"):    #finds different parts of activity
@@ -37,17 +29,15 @@ class Work_Info(Human_Basic) :
                         self.credit=self.each_part.text.replace("\n","").replace(self.extra_text,"")    #delete extra texts and "\n" of the whole of text
                         self.credit_list.append(self.credit)
             except:pass
-        Work_Info.work_dict[self.name]["activity"]=self.credit_list
         return self.credit_list
 
 
-    def movies_work(self,job,common_func):
+    def movies_work(self,job):
         """since a person can have several jobs,you can find the movies and their release dates
-        according to any job(producer,actor,director,writer,...) of that person
-        put common function as common_func argument"""
+        according to any job(producer,actor,director,writer,...) of that person"""
         self.movies_list=[]
-        common_func()
-        for self.each_table in self.tables :
+        self.common_tables=self.common()
+        for self.each_table in self.common_tables :
             try:
                 if self.each_table.h2.text=="Filmography":  #finds filmography table
                     self.all_movies=self.each_table.find_all("div",class_="filmo-row") #finds all movies in all parts
@@ -57,17 +47,15 @@ class Work_Info(Human_Basic) :
                             self.movie_name=(self.one_movie.a.text+self.one_movie.span.text).replace("\n"," ").encode("ascii","ignore").decode("utf-8")
                             self.movies_list.append(self.movie_name)
             except:pass
-        Work_Info.work_dict[self.name]["expand "+job]=self.movies_list
         return self.movies_list
 
 
 
-    def known(self,common_func):
-        """finds movies that makes person known for
-        put common function as common_func argument"""
+    def known(self):
+        """finds movies that makes person known for"""
         self.known_list=[]
-        common_func()
-        for self.each_table in self.tables :
+        self.common_tables=self.common()
+        for self.each_table in self.common_tables :
             try:
                 if self.each_table.h2.text=="Known For":    #finds known for table
                     self.movies_table=self.each_table.find_all("div",class_="knownfor-title")   #finds all parts of known for table
@@ -75,5 +63,4 @@ class Work_Info(Human_Basic) :
                         self.movie_name=self.each_table.find("div",class_="knownfor-title-role").a.text.strip()     #finds the name of movie
                         self.known_list.append(self.movie_name)
             except:pass
-        Work_Info.work_dict[self.name]["known-for"]=self.known_list
         return self.known_list
