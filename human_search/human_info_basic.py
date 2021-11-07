@@ -80,6 +80,3 @@ class Human_Basic:
                             self.family_dict[self.titles]=self.content
            
         return self.family_dict 
-
-
-
