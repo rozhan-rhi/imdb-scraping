@@ -5,7 +5,6 @@ from links import Link_Base
 
 class Filter_Base :
     """it has different methods to find movies' details"""
-    movie_specs={}  #save all movies with their details        
 
     def __str__(self):
         return f"the result of Filter_Base class is :\n{Filter_Base.movie_specs}"
@@ -13,8 +12,8 @@ class Filter_Base :
     def parse_page(self,url) :
         """parse the url and save html text"""
         self.url=url
-        self.req=requests.get(self.url)
-        self.parse=BeautifulSoup(self.req.text,"html.parser")
+        self.response_=requests.get(self.url)
+        self.parse=BeautifulSoup(self.response_.text,"html.parser")
         return self.parse
     
    
@@ -37,63 +36,105 @@ class Filter_Base :
 
     def movie_detail(self,page) :
         """finds all information about movie"""
+        self.movie_specs={}  #save all movies with their details        
         self.page=page
-        self.find_genre=self.page.find("li",{"data-testid":"storyline-genres"}) #finds genre part
-        self.genre_label=self.find_genre.span.text  #finds title(genre)
-        self.genre_content=[self.item.a.text for self.item in self.find_genre.find_all("li",role="presentation")]   #finds all genre types of movie
-        Filter_Base.movie_specs[self.genre_label]=self.genre_content
 
 
-        try:
-            #finds runtime part
-            self.runtime_part=self.page.find("section",{"data-testid":"TechSpecs"}).find("li",{"data-testid":"title-techspec_runtime"})   
-            self.runtime_label=self.runtime_part.find("span",class_="ipc-metadata-list-item__label").text   #finds the title
-            #finds the time of movie
-            self.runtime_content=self.runtime_part.find("div",class_="ipc-metadata-list-item__content-container").find("span",class_="ipc-metadata-list-item__list-content-item").text 
-            Filter_Base.movie_specs[self.runtime_label]=self.runtime_content
-        except:pass
-        try:
-            #finds the rate of movie
-            self.rating_part=self.page.find("div",class_="RatingBar__ButtonContainer-sc-85l9wd-1 idYUsR").find("div",class_="AggregateRatingButton__ContentWrap-sc-1ll29m0-0").span.text  
-            Filter_Base.movie_specs["rating"]=self.rating_part
-        except:
-            pass
+        def genre(self):
+            self.find_genre=self.page.find("li",{"data-testid":"storyline-genres"}) #finds genre part
+            self.genre_label=self.find_genre.span.text  #finds title(genre)
+            self.genre_content=[self.item.a.text for self.item in self.find_genre.find_all("li",role="presentation")]   #finds all genre types of movie
+            self.movie_specs[self.genre_label]=self.genre_content
+        genre(self)
 
-        #finds more information about movie
-        self.extra_details=self.page.find("section",{"data-testid":"Details"}).find("div",{"data-testid":"title-details-section"})  
-        self.detail_parts=self.extra_details.find_all("li",class_="ipc-metadata-list__item") #finds all details parts
-        for self.each_part in self.detail_parts:
-            try: #this try/except finds labels of parts except IMDBPro.some labels are in "a" tag and some in "span" tag
-                self.part_label=self.each_part.find("span",class_="ipc-metadata-list-item__label").text
+
+        def runtime(self) :
+            try:
+                #finds runtime part
+                self.runtime_part=self.page.find("section",{"data-testid":"TechSpecs"}).find("li",{"data-testid":"title-techspec_runtime"})   
+                self.runtime_label=self.runtime_part.find("span",class_="ipc-metadata-list-item__label").text   #finds the title
+                #finds the time of movie
+                self.runtime_content=self.runtime_part.find("div",class_="ipc-metadata-list-item__content-container")
+                if self.runtime_content.find("span",class_="ipc-metadata-list-item__list-content-item"):
+                    self.time_movie=self.runtime_content.find("span",class_="ipc-metadata-list-item__list-content-item").text 
+                else:
+                    self.time_movie=self.runtime_content.text
+                self.movie_specs[self.runtime_label]=self.time_movie
+            except:pass
+        runtime(self)
+
+
+        def rating(self) :        
+            try:
+                #finds the rate of movie
+                self.rating_part=self.page.find("div",class_="RatingBar__ButtonContainer-sc-85l9wd-1 idYUsR").find("div",class_="AggregateRatingButton__ContentWrap-sc-1ll29m0-0").span.text  
+                self.movie_specs["rating"]=self.rating_part
             except:
-                if not "companycredits" in self.each_part["data-testid"]:
-                    self.part_label=self.each_part.find("a",class_="ipc-metadata-list-item__label").text
+                pass
+        rating(self)
+
+
+        def extra(self):
+            #finds more information about movie
+            self.extra_details=self.page.find("section",{"data-testid":"Details"}).find("div",{"data-testid":"title-details-section"})  
+            self.detail_parts=self.extra_details.find_all("li",class_="ipc-metadata-list__item") #finds all details parts
+            for self.each_part in self.detail_parts:
+                try: #this try/except finds labels of parts except IMDBPro.some labels are in "a" tag and some in "span" tag
+                    self.part_label=self.each_part.find("span",class_="ipc-metadata-list-item__label").text
+                except:
+                    if not "companycredits" in self.each_part["data-testid"]:
+                        self.part_label=self.each_part.find("a",class_="ipc-metadata-list-item__label ipc-metadata-list-item__label--link").text
+                
+
+                self.find_content=self.each_part.find("div",class_="ipc-metadata-list-item__content-container") #finds the content part of movie
+                try :#this try/except finds the content of parts.some contents are in "a" tag and some in "span" tag
+                    if self.find_content.find_all("span",class_="ipc-metadata-list-item__list-content-item") : 
+                        self.part_content=[self.each_one.text for self.each_one in  self.find_content.find_all("span",class_="ipc-metadata-list-item__list-content-item")]
+
+                    else :
+                        self.part_content=[self.each_one.text for self.each_one in self.find_content.find_all("a",class_="ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link")]
+                except:
+                    continue
+                self.movie_specs[self.part_label]=self.part_content
+        extra(self)
+
             
 
-            self.find_content=self.each_part.find("div",class_="ipc-metadata-list-item__content-container") #finds the content part of movie
-            try :#this try/except finds the content of parts.some contents are in "a" tag and some in "span" tag
-                if self.find_content.find_all("span",class_="ipc-metadata-list-item__list-content-item") : 
-                    self.part_content=[self.each_one.text for self.each_one in  self.find_content.find_all("span",class_="ipc-metadata-list-item__list-content-item")]
+        def people(self):
+            try: #this part finds the name of the humans in basic parts
+                self.human_info=self.page.find("div",class_="Hero__ContentContainer-kvkd64-10") #finds human table
+                self.find_information=self.human_info.find("div",class_="PrincipalCredits__PrincipalCreditsPanelWideScreen-hdn81t-0 iGxbgr") #one step closer
+                self.info_parts=self.find_information.find_all("li",class_="ipc-metadata-list__item") #finds different parts of human table
+                for self.each_one in self.info_parts:
+                    if self.each_one.find("span",class_="ipc-metadata-list-item__label")==None: #this if/else for finding label of each part
+                        self.label_info=self.each_one.find("a",class_="ipc-metadata-list-item__label ipc-metadata-list-item__label--link").text
+                    else:
+                        self.label_info=self.each_one.find("span",class_="ipc-metadata-list-item__label").text 
 
-                else :
-                    self.part_content=[self.each_one.text for self.each_one in self.find_content.find_all("a",class_="ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link")]
-            except:
-                continue
-            Filter_Base.movie_specs[self.part_label]=self.part_content
-        
-       
-        try: #this part finds the name of the humans in basic parts
-            self.human_info=self.page.find("div",class_="Hero__ContentContainer-kvkd64-10") #finds human table
-            self.find_information=self.human_info.find("div",class_="PrincipalCredits__PrincipalCreditsPanelWideScreen-hdn81t-0 iGxbgr") #one step closer
-            self.info_parts=self.find_information.find_all("li",class_="ipc-metadata-list__item") #finds different parts of human table
-            for self.each_one in self.info_parts:
-                if self.each_one.find("span",class_="ipc-metadata-list-item__label")==None: #this if/else for finding label of each part
-                    self.label_info=self.each_one.find("a",class_="ipc-metadata-list-item__label ipc-metadata-list-item__label--link").text
-                else:
-                    self.label_info=self.each_one.find("span",class_="ipc-metadata-list-item__label").text 
-                #finds the content of each part
-                self.content_info=[self.item.text for self.item in self.each_one.find_all("a",class_="ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link")]
-                Filter_Base.movie_specs[self.label_info]=self.content_info
-        except:pass
-        return  Filter_Base.movie_specs
+                    if self.label_info.lower()=="stars":
+                        self.star_link=(self.each_one.find("a",class_="ipc-metadata-list-item__icon-link"))["href"]
+                        self.all_actor_link=f"https://www.imdb.com{self.star_link}"
+                        self.actor_page=self.parse_page(self.all_actor_link)
+                        self.actors_table=self.actor_page.find("table",class_="cast_list").find_all("tr")
+                        self.actors_names=[]
+                        for self.each_table in self.actors_table:
+                            try:
+                                self.delete_option=self.each_table.find("td",class_="primary_photo")
+                                self.all_options=self.each_table.find_all("td")
+                                for self.each_option in self.all_options:
+                                    if "name" in self.each_option.a["href"] :
+                                        if self.each_option!=self.delete_option:
+                                            self.name=self.each_option.a.text
+                                            self.actors_names.append(self.name.strip().replace("\n",""))
+                         
+                            except:pass
+                        self.movie_specs["actor"]=self.actors_names
+                     
+
+                    else:
+                        #finds the content of each part
+                        self.content_info=[self.item.text for self.item in self.each_one.find_all("a",class_="ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link")]
+                        self.movie_specs[self.label_info]=self.content_info
+            except:pass
+        people(self)
 
