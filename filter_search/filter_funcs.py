@@ -1,7 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
+from filter_basic import Filter_Base
 from find_movies import Movies
-# from callbacks import Custom_Callback
+from callbacks import Custom_Callback
 from links import Link_Base
  
 
@@ -13,11 +14,11 @@ class Filters(Link_Base,Movies) :
         return "this class finds movies and their details based on filters"
 
     
-    def rating_filter(self,start,end,adult=None) :
+    def rating_filter(self,start,end,adult=None,callback_func=None) :
         """find movies based on rating . it gets three parameters, first two parameters are range of rating and last one is adult limit """
         self.url=Link_Base(rating_start=start,rating_end=end,adult_limit=adult).rating_url  #get the rating url from links.py
         self.content_url=super().several_movie(self.url)
-        # callback_func(self.content_url)
+        callback_func(self.content_url)
         return self.content_url
 
 
@@ -33,7 +34,7 @@ class Filters(Link_Base,Movies) :
         """find movies based on their generes"""
         self.url=Link_Base(genre_name=genre_name,adult_limit=adult).genre_url   #get the genre url from links.py
         self.content_url=super().several_movie(self.url)
-        # callback_func(self.content_url)
+        callback_func(dict_=self.content_url)
         return self.content_url
 
     def release_date_filter(self,start,end,adult=None,callback_func=None):

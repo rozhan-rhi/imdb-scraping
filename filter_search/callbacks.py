@@ -20,3 +20,4 @@ class Custom_Callback(Callback) :
     def rating_callback(self,dict_,url=None) :
         self.just_name_movies=dict_.keys()
         return self.just_name_movies
+
