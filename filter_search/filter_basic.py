@@ -7,7 +7,7 @@ class Filter_Base :
     """it has different methods to find movies' details"""
 
     def __str__(self):
-        return f"the result of Filter_Base class is :\n{Filter_Base.movie_specs}"
+        return f"the result of Filter_Base class is :\n{self.movie_specs}"
 
     def parse_page(self,url) :
         """parse the url and save html text"""
@@ -128,7 +128,7 @@ class Filter_Base :
                                             self.actors_names.append(self.name.strip().replace("\n",""))
                          
                             except:pass
-                        self.movie_specs["actor"]=self.actors_names
+                        self.movie_specs["actors"]=self.actors_names
                      
 
                     else:
@@ -137,4 +137,4 @@ class Filter_Base :
                         self.movie_specs[self.label_info]=self.content_info
             except:pass
         people(self)
-
+        return self.movie_specs
