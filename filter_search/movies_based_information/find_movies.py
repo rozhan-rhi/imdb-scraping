@@ -1,5 +1,5 @@
-from filter_basic import Filter_Base
-class Movies(Filter_Base):
+from . import Save_Info
+class Movies(Save_Info):
 
     def several_movie(self,url):
         """gets 2 functions as parameter and finds all contents of some movies"""
