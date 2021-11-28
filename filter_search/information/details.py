@@ -1,4 +1,3 @@
-
 class Movie_Details() :
     """finds details of movie like release date,country of origin,language,..."""
     
