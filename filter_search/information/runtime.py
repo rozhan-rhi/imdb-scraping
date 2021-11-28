@@ -1,4 +1,5 @@
-class Movie_Runtime:
+
+class Movie_Runtime():
     """find the time of the movie"""
     
     def __init__(self,page):
@@ -19,5 +20,7 @@ class Movie_Runtime:
                 self.time_movie=self.runtime_content.text
             self.runtime_dict[self.runtime_label]=self.time_movie
         except:pass
-        
+    
+    def __call__(self) :
+        self.runtime()
         return self.runtime_dict

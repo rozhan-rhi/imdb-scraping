@@ -1,4 +1,5 @@
-class Movie_Rating :
+
+class Movie_Rating() :
     """finds the rate of movie"""
     
     def __init__(self,page) :
@@ -14,4 +15,6 @@ class Movie_Rating :
         except:
             pass
 
+    def __call__(self) :
+        self.rating()
         return self.rating_dict

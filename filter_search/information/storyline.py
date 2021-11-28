@@ -1,11 +1,12 @@
-class Movie_Storyline :
+
+class Movie_Storyline() :
     """finds summary and genre,... of movie"""
     
     def __init__(self,page) :
         self.storyline_dict={}
         self.page=page
         
-    def calling(self):
+    def __call__(self):
         self.genre()
         return self.storyline_dict
         

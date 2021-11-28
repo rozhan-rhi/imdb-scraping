@@ -1,10 +1,14 @@
-class Movie_Participant:
+
+class Movie_Participant():
     """finds the name of the humans of movie"""
     
     def __init__(self,page) :
         self.page=page
         self.people_dict={}
-        
+    
+    def __call__(self) :
+        self.people()
+        return self.people_dict
         
     def people(self):
         try: 
@@ -43,4 +47,4 @@ class Movie_Participant:
                     self.people_dict[self.label_info]=self.content_info
         except:pass
         
-        return self.people_dict
+   
