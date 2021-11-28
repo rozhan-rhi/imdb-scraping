@@ -6,13 +6,6 @@ from ..total_links import Link_Base
 class Filter_Base :
     """it has different methods to find movies' details"""
     
-    def __init__(self) :
-        self._personal_link=None
-
-    def __str__(self):
-        return f"the result of Filter_Base class is :\n{Filter_Base.movie_specs}"
-    
-
     def parse_page(self,url) :
         """parse the url and save html text"""
         self.url=url

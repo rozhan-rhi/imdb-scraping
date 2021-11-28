@@ -1,52 +1,31 @@
 from .filter_basic import Filter_Base
 from ..total_links import Link_Base
 
-class Movie_Opinion(Filter_Base) :
-    """finds if the movie is winner in race , finds people' ideas about the movie and rating of movie"""
-    
-    def parse_award_page(self,main_url) :
-        """parse the url of opinion part"""
-        self.main_url=main_url
-        self.base_page=super().main_page(super().parse_page(self.main_url))
-        self.personal_link=super().get_personal_Link
-        return self.personal_link
-    
-  
 
-class User_Reviews(Movie_Opinion) :
+
+class User_Reviews(Filter_Base) :
     """checkout user review page
         in this class opinion_part is review"""
     
-    def __init__(self,main_url):
+    def __init__(self,p_link):
         self.user_review_dict={}
-        self.main_url=main_url
+        self.p_link=p_link
         
-    def parse_completed_url(self) :
-        self.page=super().parse_award_page(self.main_url)
-        self.review_link=Link_Base(personal_link=self.page).opinion_review
-        self.parse_award_link=super().parse_page(self.review_link)
-        return self.parse_award_link
 
-
-    def __str__(self) :
-        return f"User Review of the movie is \n{self.user_review_dict}"
     
     def __call__(self) :
-        self.title()
         self.review()
         return self.user_review_dict
 
-    
-    def title(self) :
-        """we find user review word as a key of opinion_dict"""
-        self.title_page=self.parse_completed_url().find("section",class_="article").h1.text #find user review word
-        return self.title_page
-    
+
     
     def review(self):
         """we search in user reviews page and find reviews' contents"""
         #find all review items
-        self.page_items=self.parse_completed_url().find("div",class_="lister").find_all("div",class_="lister-item mode-detail imdb-user-review collapsable")
+        
+        self.review_link=Link_Base(personal_link=self.p_link).opinion_review
+        self.parse_award_link=super().parse_page(self.review_link)
+        self.page_items=self.parse_award_link.find("div",class_="lister").find_all("div",class_="lister-item mode-detail imdb-user-review collapsable")
         self.num=0  #use this for counting reviews
         for self.each_item in self.page_items :
             self.num+=1
@@ -68,41 +47,31 @@ class User_Reviews(Movie_Opinion) :
         
         
 
-class User_Rating(Movie_Opinion) :
+class User_Rating(Filter_Base) :
     """we search the rate of different group .
     in this class opinion_part is review"""
     
-    def __init__(self,main_url) :
+    def __init__(self,p_link) :
         self.user_rating_dict={}
-        self.main_url=main_url
-        
-        
-    def parse_completed_url(self) :
-        self.page=super().parse_award_page(self.main_url)
-        self.rating_link=Link_Base(personal_link=self.page).opinion_rating
-        self.parse_award_link=super().parse_page(self.rating_link)
-        return self.parse_award_link
+        self.p_link=p_link
 
-    def __str__(self):
-        return f"User Rating of movie is :\n{self.user_rating_dict}"
         
     def __call__(self) :
-        self.title()
         self.rating_movie()
+        return self.user_rating_dict
                     
         
-    def title(self) :
-        """we find user rating word as a key of opinion_dict"""
-        self.page_part=self.parse_completed_url().find("section",class_="article")
-        self.title_user=self.page_part.find("div",class_="subpage_title_block__right-column").h1.text   #find user rating word
-        return self.title_user
-    
-    
+   
     
         
     def rating_movie(self) :
         """we search in user rating page and find rating from different groups"""
+        
+        self.rating_link=Link_Base(personal_link=self.p_link).opinion_rating
+        self.parse_award_link=super().parse_page(self.rating_link)
+        self.page_part=self.parse_award_link.find("section",class_="article listo")
 
+        
         def imdb_user(self) :
             """find imdb users' rating of movie """
             self.label=self.page_part.find("div",class_="sectionHeading")
@@ -163,6 +132,7 @@ class User_Rating(Movie_Opinion) :
                                 self.user_rating_dict[self.gender.strip()][self.each_type]=self.content_demographic.strip()
                                 
         rating_demographic(self)
+        
     
     
                 
