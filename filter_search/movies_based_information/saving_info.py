@@ -1,39 +1,36 @@
-from ..information import *
-from ..total_links import Link_Base
+from ..information.filter_basic import Filter_Base
+from ..information.details import Movie_Details
+from ..information.participant import Movie_Participant
+from ..information.rating import Movie_Rating
+from ..information.runtime import Movie_Runtime
+from ..information.story_line import Movie_Storyline
 
 
 class Save_Info(Filter_Base):
     """save all information about movie """
+
     
-    def movie_name(self,main_page):
-        self.main_page=main_page
-        self.name=self.main_page.h3.a.text #finds the name of movie
+    def movie_name(self,parse_text):
+        self.finding_name=parse_text
+        self.name=self.finding_name.h3.a.text #finds the name of movie
         return self.name
     
-
-    
-    def calling_classes(self,base_page): 
+    def calling_classes(self,base_page):
         self.movie_specs={}  #save all movies with their details  
- 
-        self.base_page=super().main_page(base_page)
-        self.personal_link=super().get_personal_Link
-        
-        self.obj_details=Movie_Details(self.base_page)
-        self.obj_participant=Movie_Participant(self.base_page)
-        self.obj_rating=Movie_Rating(self.base_page)
-        self.obj_runtime=Movie_Runtime(self.base_page)
-        self.obj_storyline=Movie_Storyline(self.base_page)
-        self.obj_opinion_rating=User_Rating(p_link=self.personal_link)
-        # self.obj_opinion_review=User_Reviews(p_link=self.personal_link)
-        
-        self.movie_specs["Movie Details"]=self.obj_details()
-        self.movie_specs["Movie Participant"]=self.obj_participant()
-        self.movie_specs["Movie Rating"]=self.obj_rating.rating()
-        self.movie_specs["Movie Runtime"]=self.obj_runtime.runtime()
-        self.movie_specs["Movie Storyline"]=self.obj_storyline()
-        self.movie_specs["User Rating"]=self.obj_opinion_rating()
-        # self.movie_specs["User Review"]=self.obj_opinion_review()
+        self.page=super().main_page(base_page)
+        self.special_part=super().getter_
+        self.obj_details=Movie_Details(self.page)
+        self.obj_participant=Movie_Participant(self.page)
+        self.obj_rating=Movie_Rating(self.page)
+        self.obj_runtime=Movie_Runtime(self.page)
+        self.obj_storyline=Movie_Storyline(pasre_url=self.page,special_part=self.special_part)
+        self.movie_specs["detail"]=self.obj_details.detail_part()
+        self.movie_specs["participant"]=self.obj_participant.people()
+        self.movie_specs["rating"]=self.obj_rating.rating()
+        self.movie_specs["runtime"]=self.obj_runtime.runtime()
+        self.movie_specs["genre"]=self.obj_storyline.genre()
+        self.movie_specs["summary"]=self.obj_storyline.summary()
+        self.movie_specs["movie_tag"]=self.obj_storyline.movie_tag()
+        self.movie_specs["parent_guide"]=self.obj_storyline.movie_parents_guide()
         return self.movie_specs
-
-        
         

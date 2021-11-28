@@ -9,8 +9,8 @@ class Filters(Link_Base,Movies) :
     """the class includes callback functions .all callbacks use in several_movie function except movie_name_filter_callback
     movie_name_filter_callback uses in one_movie function"""
     
-    def __str__(self) :
-        return "this class finds movies and their details based on filters"
+    # def __str__(self) :
+    #     return "this class finds movies and their details based on filters"
 
     
     def rating_filter(self,start,end,adult=None) :
@@ -25,7 +25,7 @@ class Filters(Link_Base,Movies) :
         """find all information about the movie by its name"""
         self.url=Link_Base(movie_name=name).movie_name_url #get the movie_name url from links.py
         self.content_url=super().one_movie(self.url)
-        callback_func(self.content_url)
+        # callback_func(self.content_url)
         return self.content_url
 
 
@@ -40,12 +40,12 @@ class Filters(Link_Base,Movies) :
         """find movies based on their release dates.2 first parameters are the range of dates"""
         self.url=Link_Base(date_start=start,date_end=end,adult_limit=adult).release_url    #get the release date url from links.py
         self.content_url=super().several_movie(self.url)
-        callback_func(self.content_url)
+        # callback_func(self.content_url)
         return self.content_url
 
     def country_filter(self,country_name,adult=None,callback_func=None) :
         """find movies based on the country movies produced"""
-        self.base_url=Link_Base().advanced_url      #get the country url from links.p
+        self.base_url=Link_Base(country_name=country_name).advanced_url      #get the country url from links.p
         self.response_=requests.get(self.base_url)
         self.parse=BeautifulSoup(self.response_.text,"html.parser")
         self.page_labels=self.parse.find_all("div",class_="clause") #find all parts of advanced search page

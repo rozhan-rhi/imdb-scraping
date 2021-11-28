@@ -11,3 +11,6 @@ class Link_Base:
         self.country_url=f"https://www.imdb.com/search/title/?countries={country_name}&adult={adult_limit}"
         self.opinion_review=f"https://www.imdb.com{personal_link}reviews?ref_=tt_ql_sm"
         self.opinion_rating=f"https://www.imdb.com{personal_link}ratings?ref_=tt_ql_sm"
+        self.tagline=f"https://www.imdb.com{tagline}taglines?ref_=tt_ql_sm"
+        self.parent_guide=f"https://www.imdb.com{parent_guide}parentalguide?ref_=tt_ql_sm"
+        self.awards_url=f"https://www.imdb.com{awards}awards?ref_=tt_ql_sm"

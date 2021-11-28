@@ -2,10 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 from ..total_links import Link_Base
 
-
 class Filter_Base :
     """it has different methods to find movies' details"""
-    
+
     def parse_page(self,url) :
         """parse the url and save html text"""
         self.url=url
@@ -24,8 +23,8 @@ class Filter_Base :
         self.parse_new_page=BeautifulSoup(self.req_new_page.text,"html.parser")
         return self.parse_new_page
     
+    
     @property
-    def get_personal_Link(self) :
+    def getter_(self):
         return self._personal_link
     
-   
