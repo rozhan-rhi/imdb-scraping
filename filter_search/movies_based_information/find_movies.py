@@ -11,7 +11,7 @@ class Movies(Save_Info):
             self.specification=super().calling_classes(self.total_text) #uses 2 functions in parameter to finds all contents of movies
             self.each_movie_name=super().movie_name(self.total_text)
             self.total[self.each_movie_name]=self.specification
-            return self.total  
+        return self.total  
 
 
 
@@ -21,7 +21,7 @@ class Movies(Save_Info):
         self.url=url
         self.movie=super().parse_page(self.url).find("div",class_="lister-item mode-advanced")    #finds first movie
         self.total_text=self.movie.find("div",class_="lister-item-content")  #finds the movie part
-        self.specification=super().calling_classes(super().main_page(self.total_text))  #uses 2 functions in parameter to finds all contents of movie
+        self.specification=super().calling_classes(self.total_text)  #uses 2 functions in parameter to finds all contents of movie
         self.each_movie_name=super().movie_name(self.total_text)
         self.total[self.each_movie_name]=self.specification
         return self.total  

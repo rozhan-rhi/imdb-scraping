@@ -1,4 +1,4 @@
-from ..information import Work_Info
+from .human_work import Work_Info
 
 class Actor_Info(Work_Info):
     """save all information about actor that includes work and biography"""

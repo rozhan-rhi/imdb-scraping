@@ -1,13 +1,12 @@
-class Movie_Details() :
+# from imdbscraping.filter_search.information.filter_basic import Filter_Base
+
+
+class Movie_Details :
     """finds details of movie like release date,country of origin,language,..."""
     
     def __init__(self,page) :
         self.page=page
         self.detail_dict={}
-
-    def __call__(self) :
-        self.detail_part()
-        return self.detail_dict
 
     
     def detail_part(self):
@@ -32,6 +31,5 @@ class Movie_Details() :
             except:
                 continue
             self.detail_dict[self.part_label]=self.part_content
-    
-    
-    
+            
+        return self.detail_dict

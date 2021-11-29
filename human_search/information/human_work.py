@@ -1,5 +1,5 @@
-from . import Human_Basic
-from . import Links
+from .human_info_basic import Human_Basic
+from .links_human import Human_Links
 
 class Work_Info(Human_Basic) :
     """finds information about person's work activity"""

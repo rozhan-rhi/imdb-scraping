@@ -1,14 +1,11 @@
-
-class Movie_Participant():
+from .filter_basic import Filter_Base
+class Movie_Participant(Filter_Base):
     """finds the name of the humans of movie"""
     
     def __init__(self,page) :
         self.page=page
         self.people_dict={}
-    
-    def __call__(self) :
-        self.people()
-        return self.people_dict
+        
         
     def people(self):
         try: 
@@ -24,7 +21,7 @@ class Movie_Participant():
                 if self.label_info.lower()=="stars":
                     self.star_link=(self.each_one.find("a",class_="ipc-metadata-list-item__icon-link"))["href"]
                     self.all_actor_link=f"https://www.imdb.com{self.star_link}"
-                    self.actor_page=self.parse_page(self.all_actor_link)
+                    self.actor_page=super().parse_page(self.all_actor_link)
                     self.actors_table=self.actor_page.find("table",class_="cast_list").find_all("tr")
                     self.actors_names=[]
                     for self.each_table in self.actors_table:
@@ -47,4 +44,4 @@ class Movie_Participant():
                     self.people_dict[self.label_info]=self.content_info
         except:pass
         
-   
+        return self.people_dict

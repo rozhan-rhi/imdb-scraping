@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import re
-from . import Links
+from .links_human import Human_Links
 class Human_Basic:
     """find all information about a person who is an actor or director or writer"""
 
@@ -18,7 +18,7 @@ class Human_Basic:
 
     def personal_link(self):
         """find the special link of person"""
-        self.url=Links(person_name=self.name).person_url   #use person url of links_human ,search according to the name
+        self.url=Human_Links(person_name=self.name).person_url   #use person url of links_human ,search according to the name
         self.total_page=self.common_parsing(self.url)
         self.person_link=self.total_page.find("div",class_="lister-item-content").a["href"] #find special part of link
         return self.person_link
@@ -80,3 +80,22 @@ class Human_Basic:
                             self.family_dict[self.titles]=self.content
            
         return self.family_dict 
+    
+    def salary(self):
+        self.salary_dict={}
+        self.salary_list=[]
+        self.personal_bio()
+        try:
+            self.salary_part=self.parse.find("table",{"id":"salariesTable"}).find_all("tr")
+            for self.each_one in  self.salary_part:
+                self.label=self.each_one.a.text
+                self.content_part=(self.each_one.text.replace("\n","").replace(self.label,"").strip().encode("ascii","ignore").decode("utf-8").split(" "))
+                self.true_content=list(filter(None,self.content_part))
+                self.salary_dict[self.label]=self.true_content
+            return self.salary_dict 
+        except:
+            return "this person has no salary"
+        
+        
+# obj=Human_Basic("jennifer lopez")
+# print(obj.salary())
