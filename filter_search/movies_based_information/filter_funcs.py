@@ -43,8 +43,9 @@ class Filters(Link_Base,Movies) :
     def country_filter(self,country_name,adult=None,callback_func=None) :
         """find movies based on the country movies produced"""
         self.base_url=Link_Base(country_name=country_name).advanced_url      #get the country url from links.p
-        self.response_=requests.get(self.base_url)
-        self.parse=BeautifulSoup(self.response_.text,"html.parser")
+        # self.response_=requests.get(self.base_url)
+        # self.parse=BeautifulSoup(self.response_.text,"html.parser")
+        self.parse=super().parse_page(self.base_url)
         self.page_labels=self.parse.find_all("div",class_="clause") #find all parts of advanced search page
         for self.label in self.page_labels:
             if self.label.h3.text=="Countries":     #find countries label
@@ -56,7 +57,7 @@ class Filters(Link_Base,Movies) :
         try :
             self.url=Link_Base(country_name=self.country_brief,adult_limit=adult).country_url
             self.content_url=super().several_movie(self.url)
-            callback_func(self.content_url)
+            # callback_func(self.content_url)
             return self.content_url
         except: #if country_name parameter wasn't find , it will returns all countries' names
             self.total_countries=[self.each_country.text for self.each_country in self.country_options]

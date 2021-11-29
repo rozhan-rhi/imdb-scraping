@@ -11,7 +11,7 @@ class Work_Info(Human_Basic) :
     def common(self) :
         """common part between methods that returns a page that is used in other methods"""
         self.person_link=self.personal_link()
-        self.url=Links(special_link=self.person_link).work_url #get work url from links_human.py
+        self.url=Human_Links(special_link=self.person_link).work_url #get work url from links_human.py
         self.page=super().common_parsing(self.url)
         self.tables=self.page.find_all("div",class_="article")  #finds diffrent tables in a page
         return self.tables

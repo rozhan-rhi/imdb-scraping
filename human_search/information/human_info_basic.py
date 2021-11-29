@@ -28,7 +28,7 @@ class Human_Basic:
     def personal_bio(self) :
         """go to the personal page of person"""
         self.personal_link()
-        self.url=Links(special_link=self.person_link).bio_url   #use bio url of links_human 
+        self.url=Human_Links(special_link=self.person_link).bio_url   #use bio url of links_human 
         self.total_page=self.common_parsing(self.url)
         return self.total_page
 
@@ -60,26 +60,31 @@ class Human_Basic:
         """finds information about the family of person"""
         self.family_dict={}
         self.personal_bio()
-        self.family_part=self.parse.find("table",id="tableFamily").find_all("tr")   #finds different parts of family table
-        for self.each_part in self.family_part :
-            self.titles=self.each_part.find("td").text.strip() #finds the titles of parts
-            if self.titles.lower()=="spouse" :  #finds spouse title
-                try:
-                    self.a_tags=self.each_part.find_all("a")              
-                    #finds the contents of tiltles by finding "a" tags that have name in their links
-                    self.title_name=[self.each_href.text for self.each_href in self.a_tags if "name" in self.each_href["href"]]
-                    self.family_dict["spouse"]=self.title_name
-                except:continue
-            else : #for other titles except spouse
-                for self.item in self.each_part.find_all("td") :    #finds all titles with their contents
-                    if self.titles not in self.item.text:   #seperate contents of titles
-                        if self.item.text.strip()!=str(None):   #finds not None content
-                            self.content=self.item.text.replace(" ","")
-                            self.content=re.sub("\(.*?\)"  ,"",self.content).replace(" ","").split("\n") #remove information in parantheses & whitespaces from content
-                            self.content=list(filter(None,self.content)) #final content of part
-                            self.family_dict[self.titles]=self.content
-           
-        return self.family_dict 
+        try:
+            
+            self.family_part=self.parse.find("table",id="tableFamily").find_all("tr")   #finds different parts of family table
+            for self.each_part in self.family_part :
+                self.titles=self.each_part.find("td").text.strip() #finds the titles of parts
+                if self.titles.lower()=="spouse" :  #finds spouse title
+                    try:
+                        self.a_tags=self.each_part.find_all("a")              
+                        #finds the contents of tiltles by finding "a" tags that have name in their links
+                        self.title_name=[self.each_href.text for self.each_href in self.a_tags if "name" in self.each_href["href"]]
+                        self.family_dict["spouse"]=self.title_name
+                    except:continue
+                else : #for other titles except spouse
+                    for self.item in self.each_part.find_all("td") :    #finds all titles with their contents
+                        if self.titles not in self.item.text:   #seperate contents of titles
+                            if self.item.text.strip()!=str(None):   #finds not None content
+                                self.content=self.item.text.replace(" ","")
+                                self.content=re.sub("\(.*?\)"  ,"",self.content).replace(" ","").split("\n") #remove information in parantheses & whitespaces from content
+                                self.content=list(filter(None,self.content)) #final content of part
+                                self.family_dict[self.titles]=self.content
+            
+            return self.family_dict 
+        except:
+            return "no family information"
+        
     
     def salary(self):
         self.salary_dict={}
@@ -94,8 +99,4 @@ class Human_Basic:
                 self.salary_dict[self.label]=self.true_content
             return self.salary_dict 
         except:
-            return "this person has no salary"
-        
-        
-# obj=Human_Basic("jennifer lopez")
-# print(obj.salary())
+            return "no salary information"
