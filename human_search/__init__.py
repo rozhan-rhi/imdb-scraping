@@ -1,2 +1,2 @@
-from . import information
 from . import filters
+from . import information
