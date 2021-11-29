@@ -4,9 +4,9 @@ from ..total_links import Link_Base
 class Awards(Filter_Base) :
     """it has different methods to find movies' details"""
     
-    def __init__(self,url):
-        self.url=url
-        super().main_page(super().parse_page(self.url))
+    def __init__(self,continue_link):
+        self.continue_link=continue_link
+
         
     def awards_page(self):
         self.award_dict={}
@@ -26,17 +26,14 @@ class Awards(Filter_Base) :
 class User_Reviews(Filter_Base) :
     """checkout user review page
         in this class opinion_part is review"""
-    
     def __init__(self,p_link):
-        self.user_review_dict={}
         self.p_link=p_link
         
-
-
+        
     def review(self):
         """we search in user reviews page and find reviews' contents"""
         #find all review items
-        
+        self.user_review_dict={}
         self.review_link=Link_Base(personal_link=self.p_link).opinion_review
         self.parse_award_link=super().parse_page(self.review_link)
         self.page_items=self.parse_award_link.find("div",class_="lister").find_all("div",class_="lister-item mode-detail imdb-user-review collapsable")
@@ -65,15 +62,13 @@ class User_Reviews(Filter_Base) :
 class User_Rating(Filter_Base) :
     """we search the rate of different group .
     in this class opinion_part is review"""
-    
     def __init__(self,p_link) :
-        self.user_rating_dict={}
         self.p_link=p_link
 
         
     def rating_movie(self) :
         """we search in user rating page and find rating from different groups"""
-        
+        self.user_rating_dict={}
         self.rating_link=Link_Base(personal_link=self.p_link).opinion_rating
         self.parse_award_link=super().parse_page(self.rating_link)
         self.page_part=self.parse_award_link.find("section",class_="article listo")

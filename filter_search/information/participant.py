@@ -4,10 +4,10 @@ class Movie_Participant(Filter_Base):
     
     def __init__(self,page) :
         self.page=page
-        self.people_dict={}
         
         
     def people(self):
+        self.people_dict={}
         try: 
             self.human_info=self.page.find("div",class_="Hero__ContentContainer-kvkd64-10") #finds human table
             self.find_information=self.human_info.find("div",class_="PrincipalCredits__PrincipalCreditsPanelWideScreen-hdn81t-0 iGxbgr") #one step closer
