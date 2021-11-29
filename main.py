@@ -15,5 +15,8 @@ from filter_search import information
 # print(obj.__str__())
 
 
-obj=movies_based_information.Movies()
-print(obj.several_movie("https://www.imdb.com/search/title/?genres=drama"))
+# obj=movies_based_information.Movies()
+# print(obj.several_movie("https://www.imdb.com/search/title/?genres=drama"))
+
+obj=information.Awards("https://www.imdb.com/search/title/?genres=drama")
+print(obj.awards_page())

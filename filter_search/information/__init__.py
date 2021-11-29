@@ -4,4 +4,4 @@ from .opinion import *
 from .participant import Movie_Participant
 from .rating import Movie_Rating
 from .runtime import Movie_Runtime
-from .storyline import Movie_Storyline
+from .story_line import *

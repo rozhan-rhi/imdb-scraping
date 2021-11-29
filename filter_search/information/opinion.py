@@ -1,6 +1,26 @@
 from .filter_basic import Filter_Base
 from ..total_links import Link_Base
 
+class Awards(Filter_Base) :
+    """it has different methods to find movies' details"""
+    
+    def __init__(self,url):
+        self.url=url
+        super().main_page(super().parse_page(self.url))
+        
+    def awards_page(self):
+        self.award_dict={}
+        self.page=Link_Base(awards=super().get_personal_Link).awards_url
+        self.response=super().parse_page(self.page)
+        self.all_awards_table=self.response.find("div",id="main").find("div",class_="article listo").find_all("table",class_="awards")
+        self.subject_table=[self.each_one for self.each_one in self.response.find("div",id="main").find("div",class_="article listo").find_all("h3") if "event" in self.each_one.a["href"]]
+        for self.k,self.v in zip(self.subject_table,self.all_awards_table):
+            self.award_key=self.k.text.replace("\n","").strip()
+            self.award_value=[self.each_td.text.replace("\n"," ") for self.each_td in self.v.find_all("td",class_="title_award_outcome")]
+            self.award_dict[self.award_key]=self.award_value
+            
+        return self.award_dict
+
 
 
 class User_Reviews(Filter_Base) :
@@ -12,13 +32,7 @@ class User_Reviews(Filter_Base) :
         self.p_link=p_link
         
 
-    
-    def __call__(self) :
-        self.review()
-        return self.user_review_dict
 
-
-    
     def review(self):
         """we search in user reviews page and find reviews' contents"""
         #find all review items
@@ -40,7 +54,8 @@ class User_Reviews(Filter_Base) :
             except:pass
             self.user_review_dict[self.key_dict]["opinion"]=self.opinion     #save opinion in dictionary
             self.user_review_dict[self.key_dict]["content"]=self.content     #save content in dictionary
-            
+        return self.user_review_dict
+
     
 
 
@@ -55,14 +70,6 @@ class User_Rating(Filter_Base) :
         self.user_rating_dict={}
         self.p_link=p_link
 
-        
-    def __call__(self) :
-        self.rating_movie()
-        return self.user_rating_dict
-                    
-        
-   
-    
         
     def rating_movie(self) :
         """we search in user rating page and find rating from different groups"""
@@ -132,6 +139,7 @@ class User_Rating(Filter_Base) :
                                 self.user_rating_dict[self.gender.strip()][self.each_type]=self.content_demographic.strip()
                                 
         rating_demographic(self)
+        return self.user_rating_dict
         
     
     

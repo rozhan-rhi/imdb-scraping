@@ -9,10 +9,7 @@ class Filters(Link_Base,Movies) :
     """the class includes callback functions .all callbacks use in several_movie function except movie_name_filter_callback
     movie_name_filter_callback uses in one_movie function"""
     
-    def __str__(self) :
-        return "this class finds movies and their details based on filters"
-
-    
+   
     def rating_filter(self,start,end,adult=None) :
         """find movies based on rating . it gets three parameters, first two parameters are range of rating and last one is adult limit """
         self.url=Link_Base(rating_start=start,rating_end=end,adult_limit=adult).rating_url  #get the rating url from links.py
