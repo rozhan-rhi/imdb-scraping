@@ -1,2 +1,2 @@
-from human_search import information
-from human_search import filters
+from . import information
+from . import filters
