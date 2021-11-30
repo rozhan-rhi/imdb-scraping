@@ -38,7 +38,8 @@ class Save_Info(Filter_Base):
         self.movie_specs["detail"]=self.obj_details.detail_part()
         self.movie_specs["parent_guide"]=self.obj_storyline.movie_parents_guide()
         self.movie_specs["awards"]=self.obj_opinion_award.awards_page()
-        # self.movie_specs["user-reviews"]=self.obj_opinion_review.review()
         self.movie_specs["user-rating"]=self.obj_opinion_rating.rating_movie()
+        self.movie_specs["user-reviews"]=self.obj_opinion_review.review()
+
         return self.movie_specs
         
