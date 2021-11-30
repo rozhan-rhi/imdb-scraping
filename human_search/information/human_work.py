@@ -1,4 +1,3 @@
-from imdb_scraping.human_search.filters import actor
 from .human_info_basic import Human_Basic
 from .links_human import Human_Links
 
