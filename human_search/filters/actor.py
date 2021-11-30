@@ -3,7 +3,6 @@ from ..information.human_work import Work_Info
 class Actor_Info(Work_Info):
     """save all information about actor that includes work and biography"""
 
-
     def __init__(self,name,activity):
         super().__init__(name)
         self.actor_dict={}
@@ -23,6 +22,7 @@ class Actor_Info(Work_Info):
         self.actor_dict["activity"]=self.work_experience
         self.actor_dict["known-for"]=self.known_for
         self.actor_dict["expand "+self.activity]=self.movies
+
 
     def actor_bio(self):
         """shows the biography of actor"""

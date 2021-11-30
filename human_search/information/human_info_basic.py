@@ -85,6 +85,7 @@ class Human_Basic:
         except:
             return "no family information"
         
+        
     
     def salary(self):
         self.salary_dict={}

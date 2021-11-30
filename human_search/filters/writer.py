@@ -25,6 +25,7 @@ class Writer_Info(Work_Info):
         self.writer_dict["expand "+self.activity]=self.movies
 
 
+
     def writer_bio(self):
         """shows the biography of writer"""
         self.writer_overview=super().overview()
@@ -33,4 +34,3 @@ class Writer_Info(Work_Info):
         self.writer_dict["overview"]= self.writer_overview
         self.writer_dict["family"]=self.writer_family
         self.writer_dict["salary"]=self.writer_salary
-

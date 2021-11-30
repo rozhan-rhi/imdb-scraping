@@ -32,6 +32,7 @@ class Work_Info(Human_Basic) :
         return self.credit_list
 
 
+
     def movies_work(self,job):
         """since a person can have several jobs,you can find the movies and their release dates
         according to any job(producer,actor,director,writer,...) of that person"""

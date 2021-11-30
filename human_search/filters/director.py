@@ -9,6 +9,7 @@ class Director_Info(Work_Info):
         self.director_dict={}
         self.activity=activity
 
+
     def __call__(self):
         self.director_bio()
         self.director_work()
