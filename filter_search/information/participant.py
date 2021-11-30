@@ -18,7 +18,7 @@ class Movie_Participant(Filter_Base):
                 else:
                     self.label_info=self.each_one.find("span",class_="ipc-metadata-list-item__label").text 
 
-                if self.label_info.lower()=="stars":
+                if self.label_info.lower()=="stars" :
                     self.star_link=(self.each_one.find("a",class_="ipc-metadata-list-item__icon-link"))["href"]
                     self.all_actor_link=f"https://www.imdb.com{self.star_link}"
                     self.actor_page=super().parse_page(self.all_actor_link)
@@ -33,10 +33,11 @@ class Movie_Participant(Filter_Base):
                                     if self.each_option!=self.delete_option:
                                         self.name=self.each_option.a.text
                                         self.actors_names.append(self.name.strip().replace("\n",""))
-                        
+                            self.people_dict["actor"]=self.actors_names
+ 
                         except:pass
-                    self.people_dict["actor"]=self.actors_names
-                    
+                            
+
 
                 else:
                     #finds the content of each part
