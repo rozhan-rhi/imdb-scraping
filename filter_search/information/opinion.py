@@ -98,12 +98,13 @@ class User_Rating(Filter_Base) :
                         self.user_rating_dict[self.main_key][self.subject_content[0]]=self.items_types[0].text.strip()
                         self.user_rating_dict[self.main_key]["percent"]=self.items_types[1].text.strip()
                         self.user_rating_dict[self.main_key][self.subject_content[1]]=self.items_types[2].text.strip()
-                imdb_user(self)
             except:pass
+        imdb_user(self)
+
         
         def rating_demographic(self) :
             """finds rating of movie by demographic """
-            try:   
+            try:
                 self.tables=self.main_part.find_all("table")
                 del self.tables[0]      #delete table of imdb user 
                 for self.table_one in self.tables :
@@ -136,9 +137,9 @@ class User_Rating(Filter_Base) :
                                     self.each_type=f"age {self.each_type.strip()}"
                                     self.user_rating_dict[self.gender.strip()][self.each_type]=self.content_demographic.strip()
                                     
-                rating_demographic(self)
             except:pass
-            return self.user_rating_dict
+        rating_demographic(self)
+        return self.user_rating_dict
 
     
     
