@@ -28,7 +28,7 @@ class Save_Info(Filter_Base):
         self.obj_opinion_review=User_Reviews(self.special_part)
         self.obj_opinion_rating=User_Rating(self.special_part)
         
-        
+        self.movie_specs["user-rating"]=self.obj_opinion_rating.rating_movie()
         self.movie_specs["runtime"]=self.obj_runtime.runtime()
         self.movie_specs["genre"]=self.obj_storyline.genre()
         self.movie_specs["rating"]=self.obj_rating.rating()
@@ -38,7 +38,12 @@ class Save_Info(Filter_Base):
         self.movie_specs["detail"]=self.obj_details.detail_part()
         self.movie_specs["parent_guide"]=self.obj_storyline.movie_parents_guide()
         self.movie_specs["awards"]=self.obj_opinion_award.awards_page()
+<<<<<<< Updated upstream
         # self.movie_specs["user-reviews"]=self.obj_opinion_review.review()
         self.movie_specs["user-rating"]=self.obj_opinion_rating.rating_movie()
+=======
+        self.movie_specs["user-reviews"]=self.obj_opinion_review.review()
+
+>>>>>>> Stashed changes
         return self.movie_specs
         
