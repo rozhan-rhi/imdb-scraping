@@ -88,8 +88,8 @@ class Human_Basic:
                                 self.content=re.sub("\(.*?\)"  ,"",self.content).replace(" ","").split("\n") #remove information in parantheses & whitespaces from content
                                 self.content=list(filter(None,self.content)) #final content of part
                                 self.family_dict[self.titles]=self.content
-        except AttributeError: 
-            return "doesn't have this part"
+        except : 
+            return "no family information"
            
         return self.family_dict 
     

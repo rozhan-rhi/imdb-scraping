@@ -1,4 +1,3 @@
-from imdb_scraping.human_search.filters import actor
 from .human_info_basic import Human_Basic
 from .links_human import Human_Links
 
@@ -49,10 +48,10 @@ class Work_Info(Human_Basic) :
                             #finds the name of movie and its release date
                             self.movie_name=(self.one_movie.a.text+self.one_movie.span.text).replace("\n"," ").encode("ascii","ignore").decode("utf-8")
                             self.movies_list.append(self.movie_name)
-                    else :
-                        return f"no activity as {job}"
+                        
+                        
+                    return self.movies_list
             except:pass
-        return self.movies_list
 
 
 
