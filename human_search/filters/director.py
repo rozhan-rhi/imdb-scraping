@@ -1,4 +1,4 @@
-from ..information import Work_Info
+from ..information.human_work import Work_Info
 
 
 class Director_Info(Work_Info):

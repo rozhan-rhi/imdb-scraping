@@ -18,10 +18,10 @@ class Awards(Filter_Base) :
             self.award_key=self.k.text.replace("\n","").strip()
             self.award_value=[self.each_td.text.replace("\n"," ") for self.each_td in self.v.find_all("td",class_="title_award_outcome")]
             self.award_dict[self.award_key]=self.award_value
-        if not self.award_dict=={} :    
+        if not self.award_dict=={}:
             return self.award_dict
-        else :
-            return "no awards"
+        else:
+            return "this movie doesn't have any awards"
 
 
 

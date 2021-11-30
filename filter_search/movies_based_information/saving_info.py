@@ -18,15 +18,15 @@ class Save_Info(Filter_Base):
     def calling_classes(self,base_page):
         self.movie_specs={}  #save all movies with their details  
         self.page=super().main_page(base_page)
-        self.p_link=super().get_personal_Link
+        self.special_part=super().get_personal_Link
         self.obj_details=Movie_Details(self.page)
         self.obj_participant=Movie_Participant(self.page)
         self.obj_rating=Movie_Rating(self.page)
         self.obj_runtime=Movie_Runtime(self.page)
-        self.obj_storyline=Movie_Storyline(pasre_url=self.page,p_link=self.p_link)
-        self.obj_opinion_award=Awards(self.p_link)
-        # self.obj_opinion_review=User_Reviews(self.p_link)
-        self.obj_opinion_rating=User_Rating(self.p_link)
+        self.obj_storyline=Movie_Storyline(pasre_url=self.page,p_link=self.special_part)
+        self.obj_opinion_award=Awards(self.special_part)
+        self.obj_opinion_review=User_Reviews(self.special_part)
+        self.obj_opinion_rating=User_Rating(self.special_part)
         
         
         self.movie_specs["runtime"]=self.obj_runtime.runtime()

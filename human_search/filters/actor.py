@@ -3,7 +3,6 @@ from ..information import Work_Info
 class Actor_Info(Work_Info):
     """save all information about actor that includes work and biography"""
 
-
     def __init__(self,name,activity):
         super().__init__(name)
         self.actor_dict={}

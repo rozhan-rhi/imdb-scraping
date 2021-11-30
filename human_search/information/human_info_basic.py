@@ -89,7 +89,7 @@ class Human_Basic:
                                 self.content=list(filter(None,self.content)) #final content of part
                                 self.family_dict[self.titles]=self.content
         except AttributeError: 
-            print("doesn't have this part")
+            return "doesn't have this part"
            
         return self.family_dict 
     
@@ -106,5 +106,4 @@ class Human_Basic:
                 self.salary_dict[self.label]=self.true_content
             return self.salary_dict 
         except:
-            return "this person has no salary"
-        
+            return "no salary information"
