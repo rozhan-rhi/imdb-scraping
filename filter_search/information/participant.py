@@ -19,11 +19,11 @@ class Movie_Participant(Filter_Base):
                     self.label_info=self.each_one.find("span",class_="ipc-metadata-list-item__label").text 
 
                 if self.label_info.lower()=="stars":
+                    self.actors_names=[self.item.text for self.item in self.each_one.find_all("a",class_="ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link")]
                     self.star_link=(self.each_one.find("a",class_="ipc-metadata-list-item__icon-link"))["href"]
                     self.all_actor_link=f"https://www.imdb.com{self.star_link}"
                     self.actor_page=super().parse_page(self.all_actor_link)
                     self.actors_table=self.actor_page.find("table",class_="cast_list").find_all("tr")
-                    self.actors_names=[]
                     for self.each_table in self.actors_table:
                         try:
                             self.delete_option=self.each_table.find("td",class_="primary_photo")
