@@ -78,66 +78,68 @@ class User_Rating(Filter_Base) :
         
         def imdb_user(self) :
             """find imdb users' rating of movie """
-            self.label=self.page_part.find("div",class_="sectionHeading")
-            self.each_label_name=self.label.text.strip()    #finds IMDB user word
-            self.main_part=self.page_part.find("div",class_="title-ratings-sub-page")
-            self.content_user=self.main_part.find("div",class_="allText").find("table",{"cellpadding":"0"}).find_all("tr")
-            self.subject_content=self.content_user[0].text.strip().split()  #finds rating/votes words
-            del self.content_user[0]
-            self.general_measurement=self.main_part.find("div",{"align":"center"}).text.strip().replace("\n","")    #finds number of ratings
-            self.general_measurement=" ".join(self.general_measurement.split()) 
-            self.user_rating_dict["general_measurement"]=self.general_measurement
-            
-            for self.items_content in self.content_user :
-                self.items_types=self.items_content.find_all("td")
+            try:
+                self.label=self.page_part.find("div",class_="sectionHeading")
+                self.each_label_name=self.label.text.strip()    #finds IMDB user word
+                self.main_part=self.page_part.find("div",class_="title-ratings-sub-page")
+                self.content_user=self.main_part.find("div",class_="allText").find("table",{"cellpadding":"0"}).find_all("tr")
+                self.subject_content=self.content_user[0].text.strip().split()  #finds rating/votes words
+                del self.content_user[0]
+                self.general_measurement=self.main_part.find("div",{"align":"center"}).text.strip().replace("\n","")    #finds number of ratings
+                self.general_measurement=" ".join(self.general_measurement.split()) 
+                self.user_rating_dict["general_measurement"]=self.general_measurement
+                
+                for self.items_content in self.content_user :
+                    self.items_types=self.items_content.find_all("td")
 
-                for self.number in range(1,(len(self.items_content)+1)) :
-                    self.main_key=f"poll {self.number}"
-                    self.user_rating_dict[self.main_key]={}
-                    self.user_rating_dict[self.main_key][self.subject_content[0]]=self.items_types[0].text.strip()
-                    self.user_rating_dict[self.main_key]["percent"]=self.items_types[1].text.strip()
-                    self.user_rating_dict[self.main_key][self.subject_content[1]]=self.items_types[2].text.strip()
-        imdb_user(self)
-        
+                    for self.number in range(1,(len(self.items_content)+1)) :
+                        self.main_key=f"poll {self.number}"
+                        self.user_rating_dict[self.main_key]={}
+                        self.user_rating_dict[self.main_key][self.subject_content[0]]=self.items_types[0].text.strip()
+                        self.user_rating_dict[self.main_key]["percent"]=self.items_types[1].text.strip()
+                        self.user_rating_dict[self.main_key][self.subject_content[1]]=self.items_types[2].text.strip()
+                imdb_user(self)
+            except:pass
         
         def rating_demographic(self) :
             """finds rating of movie by demographic """
-                
-            self.tables=self.main_part.find_all("table")
-            del self.tables[0]      #delete table of imdb user 
-            for self.table_one in self.tables :
-                self.items_demographic=self.table_one.find_all("tr")    #finds different parts of rating tables 
-                self.type_category=self.items_demographic[0].text.strip().split("\n")   #age category / different types of users
-                del self.items_demographic[0]
-                for self.each_item_demographic in self.items_demographic :
-                    self.parts_each_item=self.each_item_demographic.find_all("td")
-                    self.seperator=self.tables.index(self.table_one)
-                    if self.seperator==0 :
-                        self.gender=self.parts_each_item[0].text.strip()    #find gender
-                        del self.parts_each_item[0]
-                        self.user_rating_dict[self.gender]={}  
+            try:   
+                self.tables=self.main_part.find_all("table")
+                del self.tables[0]      #delete table of imdb user 
+                for self.table_one in self.tables :
+                    self.items_demographic=self.table_one.find_all("tr")    #finds different parts of rating tables 
+                    self.type_category=self.items_demographic[0].text.strip().split("\n")   #age category / different types of users
+                    del self.items_demographic[0]
+                    for self.each_item_demographic in self.items_demographic :
+                        self.parts_each_item=self.each_item_demographic.find_all("td")
+                        self.seperator=self.tables.index(self.table_one)
+                        if self.seperator==0 :
+                            self.gender=self.parts_each_item[0].text.strip()    #find gender
+                            del self.parts_each_item[0]
+                            self.user_rating_dict[self.gender]={}  
 
 
-                            
-                    for self.each_part in self.parts_each_item :
-                        self.content_demographic=self.each_part.text.strip().replace("\n","")   #finds the votes 
-                        self.content_demographic=" = ".join(self.content_demographic.split())
-                        for self.each_type in self.type_category :
-                            self.each_type=self.each_type.strip()
-                            if self.each_type.lower()=="all ages" :
-                                self.user_rating_dict[self.gender.strip()][self.each_type]=self.content_demographic.strip() 
-                                  
-                            elif self.seperator!=0:
-                                self.user_rating_dict[self.each_type]=self.content_demographic.strip() 
                                 
-                                
-                            else : 
-                                self.each_type=f"age {self.each_type.strip()}"
-                                self.user_rating_dict[self.gender.strip()][self.each_type]=self.content_demographic.strip()
-                                
-        rating_demographic(self)
-        return self.user_rating_dict
-        
+                        for self.each_part in self.parts_each_item :
+                            self.content_demographic=self.each_part.text.strip().replace("\n","")   #finds the votes 
+                            self.content_demographic=" = ".join(self.content_demographic.split())
+                            for self.each_type in self.type_category :
+                                self.each_type=self.each_type.strip()
+                                if self.each_type.lower()=="all ages" :
+                                    self.user_rating_dict[self.gender.strip()][self.each_type]=self.content_demographic.strip() 
+                                    
+                                elif self.seperator!=0:
+                                    self.user_rating_dict[self.each_type]=self.content_demographic.strip() 
+                                    
+                                    
+                                else : 
+                                    self.each_type=f"age {self.each_type.strip()}"
+                                    self.user_rating_dict[self.gender.strip()][self.each_type]=self.content_demographic.strip()
+                                    
+                rating_demographic(self)
+            except:pass
+            return self.user_rating_dict
+
     
     
                 

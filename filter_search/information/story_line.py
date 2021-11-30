@@ -70,8 +70,7 @@ class Movie_Storyline(Filter_Base):
                         if not self.advice_label in self.storyline_dict.keys():
                             if not self.total_contents==[] :    
                                 self.storyline_dict[ self.advice_label]=self.total_contents
-                            else :
-                                return f"no {self.advice_label}"
+                           
                 except:continue
         parent_advisor(self)
         
