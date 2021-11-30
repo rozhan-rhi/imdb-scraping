@@ -58,9 +58,6 @@ class User_Reviews(Filter_Base) :
     
 
 
-        
-        
-
 class User_Rating(Filter_Base) :
     """we search the rate of different group .
     in this class opinion_part is review"""
@@ -140,12 +137,3 @@ class User_Rating(Filter_Base) :
             except:pass
         rating_demographic(self)
         return self.user_rating_dict
-
-    
-    
-                
-
-
-                
-            
-        

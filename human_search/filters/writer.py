@@ -31,4 +31,3 @@ class Writer_Info(Work_Info):
         self.writer_dict["overview"]= self.writer_overview
         self.writer_dict["family"]=self.writer_family
         self.writer_dict["salary"]=self.writer_salary
-

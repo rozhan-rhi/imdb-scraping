@@ -6,8 +6,6 @@ class Work_Info(Human_Basic) :
 
     def __init__(self,name):
         super().__init__(name)
-    
-
 
     def common(self) :
         """common part between methods that returns a page that is used in other methods"""

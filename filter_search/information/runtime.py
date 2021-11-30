@@ -18,4 +18,3 @@ class Movie_Runtime:
                 self.time_movie=self.runtime_content.text
             return self.time_movie
         except:pass
-        

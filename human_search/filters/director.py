@@ -1,6 +1,5 @@
 from ..information.human_work import Work_Info
 
-
 class Director_Info(Work_Info):
     """save all information about director that includes work and biography"""
 

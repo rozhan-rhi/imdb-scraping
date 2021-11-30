@@ -64,7 +64,6 @@ class Human_Basic:
         return self.overview_dict
 
 
-
     def family(self) :
         """finds information about the family of person"""
         self.family_dict={}

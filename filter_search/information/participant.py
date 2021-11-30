@@ -32,7 +32,8 @@ class Movie_Participant(Filter_Base):
                                 if "name" in self.each_option.a["href"] :
                                     if self.each_option!=self.delete_option:
                                         self.name=self.each_option.a.text
-                                        self.actors_names.append(self.name.strip().replace("\n",""))
+                                        if self.name not in self.actors_names:
+                                            self.actors_names.append(self.name.strip().replace("\n",""))
                         
                         except:pass
                     self.people_dict["actor"]=self.actors_names
