@@ -68,15 +68,9 @@ class Movie_Storyline(Filter_Base):
                                 self.total_contents.append(self.each_content.text.replace("Edit","").replace("\n","").strip())
                                 
                         if not self.advice_label in self.storyline_dict.keys():
-<<<<<<< Updated upstream
                             if not self.total_contents==[] :    
                                 self.storyline_dict[ self.advice_label]=self.total_contents
-                            else :
-                                return f"no {self.advice_label}"
-=======
-                            if not  self.total_contents==[]:
-                                self.storyline_dict[ self.advice_label]=self.total_contents
->>>>>>> Stashed changes
+                           
                 except:continue
         parent_advisor(self)
         
