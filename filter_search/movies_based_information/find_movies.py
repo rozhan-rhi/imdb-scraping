@@ -11,7 +11,7 @@ class Movies(Save_Info):
             self.specification=super().calling_classes(self.total_text) #uses 2 functions in parameter to finds all contents of movies
             self.each_movie_name=super().movie_name(self.total_text)
             self.total[self.each_movie_name]=self.specification
-        return self.total  
+            return self.total  
 
 
 

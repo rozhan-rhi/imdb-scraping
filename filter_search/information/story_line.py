@@ -4,9 +4,9 @@ from ..total_links import Link_Base
 from .filter_basic import Filter_Base
 class Movie_Storyline(Filter_Base):
     
-    def __init__(self,pasre_url,special_part):
+    def __init__(self,pasre_url,p_link):
         self.pasre_url=pasre_url
-        self.special_part=special_part
+        self.p_link=p_link
     
     
     def genre(self):
@@ -23,7 +23,7 @@ class Movie_Storyline(Filter_Base):
     
    
     def movie_tag(self):
-        self.tag_page=Link_Base(tagline=self.special_part).tagline
+        self.tag_page=Link_Base(tagline=self.p_link).tagline
         self.parse=super().parse_page(self.tag_page)
         self.tag_part=self.parse.find("div",id="taglines_content")
         self.no_tag=self.tag_part.find("div",id="no_content")
@@ -38,7 +38,7 @@ class Movie_Storyline(Filter_Base):
         
     def movie_parents_guide(self):
         self.storyline_dict={}
-        self.guide_page=Link_Base(parent_guide=self.special_part).parent_guide
+        self.guide_page=Link_Base(parent_guide=self.p_link).parent_guide
         self.parse=super().parse_page(self.guide_page)
         
         
@@ -68,7 +68,10 @@ class Movie_Storyline(Filter_Base):
                                 self.total_contents.append(self.each_content.text.replace("Edit","").replace("\n","").strip())
                                 
                         if not self.advice_label in self.storyline_dict.keys():
-                            self.storyline_dict[ self.advice_label]=self.total_contents
+                            if not self.total_contents==[] :    
+                                self.storyline_dict[ self.advice_label]=self.total_contents
+                            else :
+                                return f"no {self.advice_label}"
                 except:continue
         parent_advisor(self)
         
