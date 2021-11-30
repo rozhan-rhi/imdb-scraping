@@ -21,9 +21,6 @@ class Movie_Participant(Filter_Base):
                 if self.label_info.lower()=="stars":
                     self.actors_names=[]
                     try:
-                    # self.star_content=[self.item.text for self.item in self.each_one.find_all("a",class_="ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link")]
-                    # for self.each_star in self.star_content:
-                    #     self.actors_names.append(self.each_star)
                         self.star_link=(self.each_one.find("a",class_="ipc-metadata-list-item__icon-link"))["href"]
                         self.all_actor_link=f"https://www.imdb.com{self.star_link}"
                         self.actor_page=super().parse_page(self.all_actor_link)
@@ -41,9 +38,8 @@ class Movie_Participant(Filter_Base):
                             
                             except:pass
                     except:
-                        self.star_content=[self.item.text for self.item in self.each_one.find_all("a",class_="ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link")]
-                        for self.each_star in self.star_content:
-                            self.actors_names.append(self.each_star)
+                        self.actors_names=[self.item.text for self.item in self.each_one.find_all("a",class_="ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link")]
+                
                     self.people_dict["actor"]=self.actors_names
                     
 
