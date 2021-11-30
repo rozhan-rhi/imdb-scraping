@@ -12,6 +12,7 @@ class Filter_Base :
         self.parse=BeautifulSoup(self.response_.text,"html.parser")
         return self.parse
     
+    
 
     def main_page(self,html_text) :
         """finds personal link of movie then goes to movie page and parses it"""

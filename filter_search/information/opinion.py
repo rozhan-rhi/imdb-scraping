@@ -28,6 +28,7 @@ class Awards(Filter_Base) :
 class User_Reviews(Filter_Base) :
     """checkout user review page
         in this class opinion_part is review"""
+        
     def __init__(self,p_link):
         self.p_link=p_link
         

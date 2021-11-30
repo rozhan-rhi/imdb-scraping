@@ -1,4 +1,3 @@
-# from imdbscraping.filter_search.information.filter_basic import Filter_Base
 class Movie_Details :
     """finds details of movie like release date,country of origin,language,..."""
     
@@ -6,6 +5,7 @@ class Movie_Details :
         self.page=page
         self.detail_dict={}
 
+    
     
     def detail_part(self):
         
