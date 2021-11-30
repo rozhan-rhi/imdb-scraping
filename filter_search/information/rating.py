@@ -12,4 +12,3 @@ class Movie_Rating :
             return self.rating_part
         except:
             pass
-

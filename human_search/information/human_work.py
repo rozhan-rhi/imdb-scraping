@@ -6,8 +6,6 @@ class Work_Info(Human_Basic) :
 
     def __init__(self,name):
         super().__init__(name)
-    
-
 
     def common(self) :
         """common part between methods that returns a page that is used in other methods"""
@@ -48,7 +46,6 @@ class Work_Info(Human_Basic) :
                             #finds the name of movie and its release date
                             self.movie_name=(self.one_movie.a.text+self.one_movie.span.text).replace("\n"," ").encode("ascii","ignore").decode("utf-8")
                             self.movies_list.append(self.movie_name)
-                    
                     if not self.movies_list==[] :
                         return self.movies_list
                     
