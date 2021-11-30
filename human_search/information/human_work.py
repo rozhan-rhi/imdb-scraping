@@ -1,3 +1,4 @@
+from imdb_scraping.human_search.filters import actor
 from .human_info_basic import Human_Basic
 from .links_human import Human_Links
 
@@ -6,12 +7,13 @@ class Work_Info(Human_Basic) :
 
     def __init__(self,name):
         super().__init__(name)
+    
 
 
     def common(self) :
         """common part between methods that returns a page that is used in other methods"""
         self.person_link=self.personal_link()
-        self.url=Links(special_link=self.person_link).work_url #get work url from links_human.py
+        self.url=Human_Links(special_link=self.person_link).work_url #get work url from links_human.py
         self.page=super().common_parsing(self.url)
         self.tables=self.page.find_all("div",class_="article")  #finds diffrent tables in a page
         return self.tables
@@ -46,6 +48,8 @@ class Work_Info(Human_Basic) :
                             #finds the name of movie and its release date
                             self.movie_name=(self.one_movie.a.text+self.one_movie.span.text).replace("\n"," ").encode("ascii","ignore").decode("utf-8")
                             self.movies_list.append(self.movie_name)
+                    else :
+                        return f"no activity as {job}"
             except:pass
         return self.movies_list
 
