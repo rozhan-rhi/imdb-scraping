@@ -47,20 +47,12 @@ class Work_Info(Human_Basic) :
                         if job in self.one_movie["id"]:    #finds movies that their id include job
                             #finds the name of movie and its release date
                             self.movie_name=(self.one_movie.a.text+self.one_movie.span.text).replace("\n"," ").encode("ascii","ignore").decode("utf-8")
-<<<<<<< Updated upstream
                             self.movies_list.append(self.movie_name)
-                    
                     if not self.movies_list==[] :
                         return self.movies_list
                     
                     else :
                         return f"no activity as {job}"
-=======
-                            if not self.movies_list==[]:
-                                self.movies_list.append(self.movie_name)
-                            
-                    return self.movies_list
->>>>>>> Stashed changes
             except:pass
 
 
