@@ -28,7 +28,6 @@ class Save_Info(Filter_Base):
         self.obj_opinion_review=User_Reviews(self.special_part)
         self.obj_opinion_rating=User_Rating(self.special_part)
         
-        # self.movie_specs["user-rating"]=self.obj_opinion_rating.rating_movie()
         self.movie_specs["runtime"]=self.obj_runtime.runtime()
         self.movie_specs["genre"]=self.obj_storyline.genre()
         self.movie_specs["rating"]=self.obj_rating.rating()
