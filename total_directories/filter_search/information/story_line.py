@@ -43,20 +43,20 @@ class Movie_Storyline(Filter_Base):
         
     def movie_parents_guide(self):
         self.storyline_dict={}
-        self.guide_page=Link_Base(parent_guide=self.p_link).parent_guide
-        self.parse=super().parse_page(self.guide_page)
-        
+        self.guide_link=Link_Base(parent_guide=self.p_link).parent_guide
+        self.parse=super().parse_page(self.guide_link)
         
         def certificate(self):
-            self.certification_part=self.parse.find("section",id="certificates")
-            self.certificate_label=self.certification_part.find("div",class_="ipl-header__content").h4.text
-            self.all_certificates=self.certification_part.find_all("li")
-            self.certificate_list=[]
-            for self.each_one in self.all_certificates:
-                self.certificate_content=self.each_one.a.text.strip().replace("\n","")
-                if not self.certificate_content in self.certificate_list:
-                    self.certificate_list.append(self.certificate_content)
-            self.storyline_dict[self.certificate_label]=self.certificate_list
+            # self.certification_part=self.driver.find_element_by_class_name("ipl-zebra-list__label")
+            self.certificate_label=self.parse.find("div",class_="ipl-header__content").text
+            self.all_certificates=[self.each_ct.text for self.each_ct in self.parse.find_all("a",href=True) if "certificates" in re.split("?|=" , self.each_ct)]
+            # self.certificate_list=[]
+            # for self.each_one in self.all_certificates:
+            #     self.certificate_content=self.each_one.a.text.strip().replace("\n","")
+            #     if not self.certificate_content in self.certificate_list:
+            #         self.certificate_list.append(self.certificate_content)
+            self.storyline_dict[self.certificate_label]=self.all_certificates
+                # self.certificate_list
         certificate(self)
         
         
@@ -79,6 +79,6 @@ class Movie_Storyline(Filter_Base):
                                 self.storyline_dict[ self.advice_label]="no information"
                            
                 except:continue
-        parent_advisor(self)
+        # parent_advisor(self)
         
         return self.storyline_dict
