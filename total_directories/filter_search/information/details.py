@@ -9,7 +9,7 @@ class Movie_Details :
     
     def detail_part(self):
         
-        self.extra_details=self.page.find("section",{"data-testid":"Details"}).find("div",{"data-testid":"title-details-section"})  
+        self.extra_details=self.page.find("div",{"data-testid":"title-details-section"})  
         self.detail_parts=self.extra_details.find_all("li",class_="ipc-metadata-list__item") #finds all details parts
         for self.each_part in self.detail_parts:
             try: #this try/except finds labels of parts except IMDBPro.some labels are in "a" tag and some in "span" tag

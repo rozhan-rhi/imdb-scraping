@@ -13,8 +13,6 @@ class Movie_Storyline(Filter_Base):
     
     
     def genre(self):
-        # self.find_genre=self.pasre_url.find("li",{"data-testid":"storyline-genres"}) #finds genre part
-        # self.genre_label=self.find_genre.span.text  #finds title(genre)
         self.genre_content=[self.item.text for self.item in self.parse_url.find_all("a",href=True) if "/search/title/?genres" in self.item['href'].split("=")]   #finds all genre types of movie
         return self.genre_content
         

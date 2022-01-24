@@ -9,9 +9,10 @@ class Movie_Participant(Filter_Base):
     def people(self):
         self.people_dict={}
         try: 
-            self.human_info=self.page.find("div",class_="Hero__ContentContainer-kvkd64-10") #finds human table
-            self.find_information=self.human_info.find("div",class_="PrincipalCredits__PrincipalCreditsPanelWideScreen-hdn81t-0 iGxbgr") #one step closer
-            self.info_parts=self.find_information.find_all("li",class_="ipc-metadata-list__item") #finds different parts of human table
+            # self.human_info=self.page.find("div",class_="Hero__ContentContainer-kvkd64-10") #finds human table
+            # self.find_information=self.human_info.find("div",class_="PrincipalCredits__PrincipalCreditsPanelWideScreen-hdn81t-0 iGxbgr") #one step closer
+            self.info_parts=self.page.find_all("li",{"class":"ipc-metadata-list__item","data-testid":"title-pc-principal-credit"}) #finds different parts of human table
+            print(len(self.info_parts))
             for self.each_one in self.info_parts:
                 if self.each_one.find("span",class_="ipc-metadata-list-item__label")==None: #this if/else for finding label of each part
                     self.label_info=self.each_one.find("a",class_="ipc-metadata-list-item__label ipc-metadata-list-item__label--link").text
