@@ -7,13 +7,14 @@ class Movies(Save_Info):
         """gets 2 functions as parameter and finds all contents of some movies"""
         self.total={}
         self.url=url
-        self.movie_url=[self.each for self.each in super().parse_page(self.url).find_all("a",href=True) if re.findall("tt([0-9]+)" , self.each['href'])]
+        self.movie_url=[self.each.a["href"] for self.each in super().parse_page(self.url).find_all("div",class_="lister-item-content") if re.findall("tt([0-9]+)",self.each.a["href"])]
         for self.each_movie in self.movie_url :
-            self.complete_url=f"{'https://www.imdb.com'}{self.each_movie['href']}"
-            self.specification=super().calling_classes(self.complete_url,self.each_movie['href']) #uses 2 functions in parameter to finds all contents of movies
-            self.each_movie_name=self.each_movie.text
-            self.total[self.each_movie_name]=self.specification
-        return self.total
+            self.complete_url=f"https://www.imdb.com{self.each_movie}"
+            print(self.complete_url)
+        #     self.specification=super().calling_classes(self.complete_url,self.each_movie['href']) #uses 2 functions in parameter to finds all contents of movies
+        #     self.each_movie_name=self.each_movie.text
+        #     self.total[self.each_movie_name]=self.specification
+        # return self.total
 
 
 
