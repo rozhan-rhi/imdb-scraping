@@ -6,6 +6,7 @@ class Movie_Details :
         self.detail_dict={}
 
     
+    
     def detail_part(self):
         
         self.extra_details=self.page.find("section",{"data-testid":"Details"}).find("div",{"data-testid":"title-details-section"})  

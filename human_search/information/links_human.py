@@ -1,4 +1,4 @@
-class Links :
+class Human_Links :
     """includes all links"""
     def __init__(self,person_name=None,special_link=None) :
         self.person_url=f"https://www.imdb.com/search/name/?name={person_name}"

@@ -3,7 +3,6 @@ class Movie_Runtime:
     
     def __init__(self,page):
         self.page=page
-        self.runtime_dict={}
 
             
     def runtime(self) :
@@ -17,7 +16,5 @@ class Movie_Runtime:
                 self.time_movie=self.runtime_content.find("span",class_="ipc-metadata-list-item__list-content-item").text 
             else:
                 self.time_movie=self.runtime_content.text
-            self.runtime_dict[self.runtime_label]=self.time_movie
+            return self.time_movie
         except:pass
-        
-        return self.runtime_dict

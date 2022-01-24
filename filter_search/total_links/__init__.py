@@ -1,1 +1,1 @@
-from links import *
+from .links import Link_Base
