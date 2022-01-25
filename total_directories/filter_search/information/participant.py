@@ -9,26 +9,29 @@ class Movie_Participant(Filter_Base):
         
     def people(self):
         self.people_dict={}
-        
-        # try: 
         self.info_parts=self.page.find_all("li",{"data-testid":"title-pc-principal-credit"}) #finds different parts of human table
         for self.each_one in self.info_parts:
-            if self.each_one.find("span",class_="ipc-metadata-list-item__label")==None: #this if/else for finding label of each part
-                self.info=self.each_one.find("a",class_="ipc-metadata-list-item__label ipc-metadata-list-item__label--link")
+            try: 
+                self.info=self.each_one.span
+                self.label_info=self.info.text
+                self.content=[self.each_name.text for self.each_name in self.each_one.find_all("a",href=True) if "name" in self.each_name['href'].split("/")]
+                self.people_dict[self.label_info]=self.content
+                
+            except:
+                self.info=self.each_one.find("a",href=True)
                 self.label_info=self.info.text 
-                self.see_full_item=self.each_one.find("a",class_="ipc-metadata-list-item__icon-link")
-                self.see_full_page=self.parse_page(f"https://www.imdb.com{self.see_full_item['href']}").find("table",class_="cast_list")
-                self.all_options=[self.name_movie.text for self.name_movie in self.see_full_page.find_all("a",href=True) if "name" in self.name_movie['href'].split("/")]
+                self.see_full_page=self.parse_page(f"https://www.imdb.com{self.info['href']}").find("table",class_="cast_list")
+                self.all_options=list(filter(None,[self.name_movie.text.strip().replace("\n","") for self.name_movie in self.see_full_page.find_all("a",href=True) if "name" in self.name_movie['href'].split("/")]))
                 self.content=self.all_options
                 self.people_dict[self.label_info]=self.content
+        return self.people_dict
 
 
-
-            else:
-                self.info=self.each_one.find("span",class_="ipc-metadata-list-item__label")
-                self.label_info=self.info.text
-                self.content=[self.each_name.text for self.each_name in self.info.parent.find_all("a",href=True) if "name" in self.each_name['href'].split("/")]
-                self.people_dict[self.label_info]=self.content
+            # else:
+            #     self.info=self.each_one.span
+            #     self.label_info=self.info.text
+            #     self.content=[self.each_name.text for self.each_name in self.one.find_all("a",href=True) if "name" in self.each_name['href'].split("/")]
+            #     self.people_dict[self.label_info]=self.content
 
         #     try:
         #         self.star_link=[self.one_star for self.one_star in self.each_one.find_all("a",href=True) if "fullcredits" in self.one_star['href'].split("/") ]
@@ -69,4 +72,3 @@ class Movie_Participant(Filter_Base):
         #         self.people_dict[self.label_info]=self.content_info
         # # except:pass
         
-        return self.people_dict

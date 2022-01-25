@@ -42,4 +42,4 @@ class Save_Info(Filter_Base):
         # self.movie_specs["user-rating"]=self.obj_opinion_rating.rating_movie()
         # print(self.movie_specs["parent_guide"])
         # return self.movie_specs
-        
+        return self.movie_specs
