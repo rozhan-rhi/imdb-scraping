@@ -19,4 +19,5 @@ from total_directories.filter_search.movies_based_information import Filters,Mov
 
 obj=Movies()
 
-print(obj.several_movie("https://www.imdb.com/search/title/?genres=comedy"))
+# print(obj.several_movie("https://www.imdb.com/search/title/?genres=comedy"))
+print(obj.one_movie("https://www.imdb.com/search/title/?title=don't look up"))

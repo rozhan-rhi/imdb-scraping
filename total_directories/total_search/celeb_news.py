@@ -1,4 +1,4 @@
-from t_links import T_Links
+from .t_links import T_Links
 import requests
 from bs4 import BeautifulSoup
 class Celeb_New:

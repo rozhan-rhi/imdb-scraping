@@ -1,5 +1,5 @@
 import datetime
-from t_links import T_Links 
+from .t_links import T_Links 
 from bs4 import BeautifulSoup
 import requests
 class Born_Today:

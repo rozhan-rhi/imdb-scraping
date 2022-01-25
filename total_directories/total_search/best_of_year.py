@@ -1,4 +1,4 @@
-from t_links import T_Links
+from .t_links import T_Links
 from bs4 import BeautifulSoup
 from bs4.dammit import EncodingDetector
 import requests
@@ -33,16 +33,16 @@ class Bests:
                     if re.findall("ls[0-9]+",self.h_link) :
                         self.title.append(self.t_movie)
                         self.id_=re.findall("ls[0-9]+",self.h_link).pop()
-                        self.main_link=f"https://www.imdb.com/list/{self.id_}/?ref_=ls_mv_sm"
+                        self.main_link=T_Links(id_=self.id_).if_best_link
 
                     elif re.findall("rg[0-9]+",self.h_link):
                         self.title.append(self.t_movie)
                         self.id_=re.findall("rg[0-9]+",self.h_link).pop()
-                        self.main_link=f"https://www.imdb.com/gallery/{self.id_}/?ref_=rg_mv_sm"
+                        self.main_link=T_Links(elif_id_=self.id_).elif_best_link
                     self.total_links.append(self.main_link)
                     
                 else:
-                    self.complete_url=f"https://www.imdb.com/{self.h_link}"
+                    self.complete_url=T_Links(h_link=self.h_link).else_best_url
                     self.response=self.common(self.complete_url)
                     self.all_movie=self.response.find_all("div",class_="lister-item-content")
                     self.movies_name=[self.one.a.text for self.one in self.all_movie if re.findall("/title/tt[0-9]+", self.one.find("a",href=True)["href"])]
@@ -50,11 +50,11 @@ class Bests:
                         if re.findall("ls[0-9]+",self.h_link) :
                             self.title.append(self.t_movie)
                             self.id_=re.findall("ls[0-9]+",self.h_link).pop()
-                            self.main_link=f"https://www.imdb.com/list/{self.id_}/?ref_=ls_mv_sm"
+                            self.main_link=T_Links(h_listlink=self.id_).list_link
                         elif re.findall("rg[0-9]+",self.h_link):
                             self.title.append(self.t_movie)
                             self.id_=re.findall("rg[0-9]+",self.h_link).pop()
-                            self.main_link=f"https://www.imdb.com/gallery/{self.id_}/?ref_=rg_mv_sm"
+                            self.main_link=T_Links(h_gallerylink=self.id_).gallery_link
                                                   
                         self.total_links.append(self.main_link)
                     else: 
@@ -76,7 +76,7 @@ class Bests:
                 self.rg=re.findall("rg[0-9]+",self.each_link).pop()
                 self.pages=[self.item.strip() for self.item in self.m_soup.find("span",class_="page_list").text.strip().split("\n")]
                 for self.page_num in self.pages:                
-                    self.page_url=f"https://www.imdb.com/gallery/{self.rg}?page={int(self.page_num)}&ref_=rgmi_mi_sm"
+                    self.page_url=T_Links(rg=self.rg,page_num=int(self.page_num)).main_page_url
                     self.p_soup=self.common(self.page_url)
                     for self.each in self.p_soup.find_all("a",href=True) :
                         try:
