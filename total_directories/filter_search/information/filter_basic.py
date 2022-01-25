@@ -1,10 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
-from ..total_links import Link_Base
+from ..total_links.links import Link_Base
+
 
 class Filter_Base :
     """it has different methods to find movies' details"""
 
+    
     def parse_page(self,url) :
         """parse the url and save html text"""
         self.url=url
