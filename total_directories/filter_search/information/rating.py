@@ -8,7 +8,7 @@ class Movie_Rating :
     def rating(self) :  
         try:
             #finds the rate of movie
-            self.rating_part=self.page.find("div",class_="RatingBar__ButtonContainer-sc-85l9wd-1 idYUsR").find("div",class_="AggregateRatingButton__ContentWrap-sc-1ll29m0-0").span.text  
+            self.rating_part=list(set([self.each_tag.span.text for self.each_tag in self.page.find_all("a",href=True) if "/ratings/" in self.each_tag["href"]])).pop()
             return self.rating_part
         except:
             pass

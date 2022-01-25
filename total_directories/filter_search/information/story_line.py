@@ -45,16 +45,10 @@ class Movie_Storyline(Filter_Base):
         self.parse=super().parse_page(self.guide_link)
         
         def certificate(self):
-            # self.certification_part=self.driver.find_element_by_class_name("ipl-zebra-list__label")
-            self.certificate_label=self.parse.find("div",class_="ipl-header__content").text
-            self.all_certificates=[self.each_ct.text for self.each_ct in self.parse.find_all("a",href=True) if "certificates" in re.split("?|=" , self.each_ct)]
-            # self.certificate_list=[]
-            # for self.each_one in self.all_certificates:
-            #     self.certificate_content=self.each_one.a.text.strip().replace("\n","")
-            #     if not self.certificate_content in self.certificate_list:
-            #         self.certificate_list.append(self.certificate_content)
+            self.certificate_part=self.parse.find("section",id="certificates")
+            self.certificate_label=self.certificate_part.find("div",class_="ipl-header__content").text.replace("\n","")
+            self.all_certificates=[self.each_ct.text for self.each_ct in self.certificate_part.find_all("a",href=True) if re.search("certificates",self.each_ct["href"]) and not re.search("updates",self.each_ct["href"])]
             self.storyline_dict[self.certificate_label]=self.all_certificates
-                # self.certificate_list
         certificate(self)
         
         
@@ -65,7 +59,7 @@ class Movie_Storyline(Filter_Base):
                 try:
                     self.advice_label=self.each_part.h4.text
                     if self.advice_label.lower() !="certification" :
-                        self.content_parts=self.each_part.find("ul",class_="ipl-zebra-list").find_all("li")
+                        self.content_parts=self.each_part.find_all("li")
                         for self.each_content in self.content_parts:
                             if self.each_content.find("div",class_="ipl-swapper")==None:
                                 self.total_contents.append(self.each_content.text.replace("Edit","").replace("\n","").strip())
@@ -77,6 +71,6 @@ class Movie_Storyline(Filter_Base):
                                 self.storyline_dict[ self.advice_label]="no information"
                            
                 except:continue
-        # parent_advisor(self)
+        parent_advisor(self)
         
         return self.storyline_dict

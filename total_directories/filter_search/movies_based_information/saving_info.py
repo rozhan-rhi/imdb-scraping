@@ -21,9 +21,9 @@ class Save_Info(Filter_Base):
         self.page=super().parse_page(url)
         # self.obj_details=Movie_Details(self.page)
         self.obj_participant=Movie_Participant(self.page)
-        self.obj_rating=Movie_Rating(self.page)
+        # self.obj_rating=Movie_Rating(self.page)
         # self.obj_runtime=Movie_Runtime(self.page)
-        # self.obj_storyline=Movie_Storyline(parse_url=self.page,p_link=self.personal)
+        self.obj_storyline=Movie_Storyline(parse_url=self.page,p_link=self.personal)
         # self.obj_opinion_award=Awards(self.personal)
         # self.obj_opinion_review=User_Reviews(self.personal)
         # self.obj_opinion_rating=User_Rating(self.personal)
@@ -36,9 +36,10 @@ class Save_Info(Filter_Base):
         # self.movie_specs["movie_tag"]=self.obj_storyline.movie_tag()
         # self.movie_specs["participant"]=self.obj_participant.people()
         # self.movie_specs["detail"]=self.obj_details.detail_part()
-        # self.movie_specs["parent_guide"]=self.obj_storyline.movie_parents_guide()
-        # self.movie_specs["awards"]=self.obj_opinion_award.awards_page()
+        self.movie_specs["parent_guide"]=self.obj_storyline.movie_parents_guide()
+        # self.movie_specs["awards"]=self.obj_opinion_award.awards_page()                    *
         # self.movie_specs["user-reviews"]=self.obj_opinion_review.review()
         # self.movie_specs["user-rating"]=self.obj_opinion_rating.rating_movie()
+        print(self.movie_specs["parent_guide"])
         return self.movie_specs
         
