@@ -4,7 +4,11 @@ from ..information.participant import Movie_Participant
 from ..information.rating import Movie_Rating
 from ..information.runtime import Movie_Runtime
 from ..information.story_line import Movie_Storyline
-from ..information.opinion import *
+from ..information.opinion import Awards
+from ..information.urating import User_Rating
+from ..information.ureview import User_Reviews
+
+
 
 class Save_Info(Filter_Base):
     """save all information about movie """

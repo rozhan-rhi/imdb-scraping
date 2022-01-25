@@ -5,7 +5,7 @@ from collections import namedtuple
 from selenium import webdriver
 from selenium.webdriver.common.by import By 
 import time
-from .find_movies import Movies
+from ..filter_search.movies_based_information.find_movies import Movies
 
 class What_To_Watch() :
         
