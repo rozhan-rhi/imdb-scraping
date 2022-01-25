@@ -9,7 +9,6 @@ class Movie_Runtime:
         try:
             #finds runtime part
             self.runtime_part=self.page.find("li",{"data-testid":"title-techspec_runtime"})   
-            # self.runtime_label=self.runtime_part.find("span",class_="ipc-metadata-list-item__label").text   #finds the title
             #finds the time of movie
             self.runtime_content=self.runtime_part.find("div",class_="ipc-metadata-list-item__content-container")
             if self.runtime_content.find("span",class_="ipc-metadata-list-item__list-content-item"):

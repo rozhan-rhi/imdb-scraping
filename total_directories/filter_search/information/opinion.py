@@ -10,7 +10,6 @@ class Awards(Filter_Base) :
     def awards_page(self):
         self.award_dict={}
         self.page=Link_Base(awards=self.p_link).awards_url
-        # print(self.page)
         self.response=super().parse_page(self.page)
         self.all_awards_table=self.response.find_all("table",class_="awards")
         try:
