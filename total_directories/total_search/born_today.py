@@ -10,9 +10,6 @@ class Born_Today:
         self.url=T_Links(month=self.month,day=self.day).born_today_url
         self.req=requests.get(self.url)
         self.response=BeautifulSoup(self.req.text,"html.parser")
-        self.find_people=self.response.find("div",class_="lister-list").find_all("div",class_="lister-item mode-detail")
+        self.find_people=self.response.find_all("div",class_="lister-item mode-detail")
         self.people_name=[self.each_person.find("div",class_="lister-item-content").a.text.replace("\n","").strip() for self.each_person in self.find_people]
         return self.people_name
-        
-obj=Born_Today()
-print(obj.get_day_month())

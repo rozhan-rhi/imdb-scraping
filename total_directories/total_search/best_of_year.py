@@ -109,11 +109,4 @@ class Bests:
             self.bests_of_year[self.each_t]=self.values 
              
         self.browser.close()
-        print(len(self.bests_of_year.keys()))
         return self.bests_of_year
-                            
-
-                
-
-obj=Bests()
-print(obj.find_bests(2021))
