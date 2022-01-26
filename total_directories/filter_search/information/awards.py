@@ -2,7 +2,7 @@ from .filter_basic import Filter_Base
 from ..total_links import Link_Base
 import re 
 
-class Awards(Filter_Base) :
+class Movie_Awards(Filter_Base) :
     """it has different methods to find movies' details"""
     
     def __init__(self,p_link):

@@ -1,11 +1,11 @@
 import requests 
 from bs4 import BeautifulSoup
-from bs4.dammit import EncodingDetector, encoding_res
+from bs4.dammit import EncodingDetector
 from .t_links import T_Links
 import re
 
 
-class Central :
+class Prizes :
     
     def parse_page(self,url) :
         self.url=url
