@@ -18,8 +18,8 @@ from total_directories.human_search.filters import Actor_Info
 # print(x)
 
 
-obj=Movies()
-print(obj.several_movie("https://www.imdb.com/search/title/?genres=comedy"))
+# obj=Movies()
+# print(obj.several_movie("https://www.imdb.com/search/title/?genres=comedy"))
 # print(obj.one_movie("https://www.imdb.com/search/title/?title=don't look up"))
 
 
@@ -29,3 +29,6 @@ print(obj.several_movie("https://www.imdb.com/search/title/?genres=comedy"))
 
 # obj=Actor_Info("brad pitt","actor")
 # print(obj())
+
+obj=What_To_Watch()
+print(obj.guide())

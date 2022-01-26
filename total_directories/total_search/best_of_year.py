@@ -67,7 +67,7 @@ class Bests:
 
         self.TL=zip(self.title,self.total_links)
         self.browser=webdriver.Firefox()
-        # self.browser.minimize_window()
+        self.browser.minimize_window()
         self.browser.implicitly_wait(20)
         for self.each_t,self.each_link in self.TL:
             self.m_soup=self.common(self.each_link)

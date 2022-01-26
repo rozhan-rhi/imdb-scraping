@@ -1,3 +1,3 @@
 from .human_info_basic import Human_Basic
 from .human_work import Work_Info
-from .links_human import Human_Links
+from .human_links import Human_Links

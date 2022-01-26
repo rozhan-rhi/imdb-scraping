@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from bs4.dammit import EncodingDetector
-from ..total_links.links import Link_Base
+from ..filter_links.links import Link_Base
 
 
 class Filter_Base :

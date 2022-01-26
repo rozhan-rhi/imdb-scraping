@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By 
 import time
 from ..filter_search.movies_based_information.find_movies import Movies
-from t_links import T_Links
+from .t_links import T_Links
 
 class What_To_Watch() :
         

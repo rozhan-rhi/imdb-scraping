@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from .find_movies import Movies
 from .callbacks import Custom_Callback
-from ..total_links import Link_Base
+from ..filter_links import Link_Base
  
 
 class Filters(Link_Base,Movies) :

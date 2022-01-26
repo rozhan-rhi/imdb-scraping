@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 from bs4.dammit import EncodingDetector
-from .links_human import Human_Links
+from .human_links import Human_Links
 class Human_Basic:
     """find all information about a person who is an actor or director or writer"""
 
