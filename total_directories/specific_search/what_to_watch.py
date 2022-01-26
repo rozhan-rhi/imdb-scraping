@@ -49,7 +49,8 @@ class What_To_Watch() :
         #create complete links
         self.links=["{}{}".format(self.resp.url.replace('com/','com'),self.link) for self.link in self.WTO]
 
-        self.driver=webdriver.Firefox()        
+        self.driver=webdriver.Firefox()  
+        self.driver.implicitly_wait(20)      
         for self.each_link in self.links :
             self.driver.get(self.each_link)
     
@@ -60,7 +61,6 @@ class What_To_Watch() :
             
             except :
                 continue            
-            time.sleep(2)
         self.driver.close()
         
         #creating namedtuple of tabs and movie_names

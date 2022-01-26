@@ -1,9 +1,14 @@
 from total_directories.filter_search.movies_based_information import Filters,Movies
-from total_directories.total_search import Celeb_New,Born_Today,Prizes,What_To_Watch
-from total_directories.human_search.filters import Actor_Info
+from total_directories.specific_search import Celeb_New,Born_Today,Prizes,What_To_Watch
+from total_directories.human_search.filters import Actor_Info,Director_Info,Writer_Info
 import pandas as pd
-# from imdbscraping.human_search.filters import *
-# import pandas as pd
+"""1.use this code to save information to save_file.csv     
+        data=pd.DataFrame(data=obj.actor_bio())
+        data.to_csv("save_file.csv")
+        
+    2.these are examples of working of some classes to know how to work with them"""
+    
+    
 
 # obj=Filters()
 # y=obj.country_filter("afghanistan")
@@ -31,7 +36,9 @@ import pandas as pd
 
 
 # obj=Actor_Info("brad pitt","actor")
-# print(obj())
+# data=pd.DataFrame(data=obj.actor_bio())
+# data.to_csv("save_file.csv")
+
 
 # obj=What_To_Watch()
 # print(obj.guide())
