@@ -1,5 +1,5 @@
 from total_directories.filter_search.movies_based_information import Filters,Movies
-from total_directories.total_search import Celeb_New,Born_Today
+from total_directories.total_search import Celeb_New,Born_Today,Prizes,What_To_Watch
 from total_directories.human_search.filters import Actor_Info
 # from imdbscraping.human_search.filters import *
 # import pandas as pd
