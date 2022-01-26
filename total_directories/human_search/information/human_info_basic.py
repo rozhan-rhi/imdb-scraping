@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import re
+from bs4.dammit import EncodingDetector
 from .links_human import Human_Links
 class Human_Basic:
     """find all information about a person who is an actor or director or writer"""
@@ -11,9 +12,14 @@ class Human_Basic:
 
     def common_parsing(self,url):
         """parse the url and return html text"""
+        self.parser="html.parser"
         self.req=requests.get(url)
-        self.parse=BeautifulSoup(self.req.text,"html.parser")
+        self.http_encoding = self.req.encoding if 'charset' in self.req.headers.get('content-type',"").lower() else None
+        self.html_encoding = EncodingDetector.find_declared_encoding(self.req.content, is_html=True)
+        self.encoding=self.http_encoding or self.html_encoding
+        self.parse=BeautifulSoup(self.req.content,self.parser,from_encoding=self.encoding)
         return self.parse
+    
     
 
     def personal_link(self):

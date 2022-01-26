@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By 
 import time
 from ..filter_search.movies_based_information.find_movies import Movies
+from t_links import T_Links
 
 class What_To_Watch() :
         
@@ -22,12 +23,13 @@ class What_To_Watch() :
     def guid(self) :
         self.guid_dict={}
         self.regex="ls([0-9]+)"
-        self.page=self.parse_page("https://www.imdb.com/what-to-watch/?ref_=hm_watch_btn")       
+        self.page=self.parse_page(T_Links().guide_url)       
         self.watch_guid=[self.item for self.item in self.page.find("div",class_="WatchGuides__ItemWrapper-sc-wu7yfb-1 fCITGH").find_all("div",class_="ipc-slate-card__title-text ipc-slate-card__title-text--clamp-none")]
         self.obj_Movies=Movies()
         for self.each_guid in self.watch_guid : 
             self.guid_label=self.each_guid.text
-            self.guid_content=self.obj_Movies.several_movie(f"https://www.imdb.com{self.each_guid.parent['href']}")
+            self.guide=self.each_guid.parent['href']
+            self.guid_content=self.obj_Movies.several_movie(T_Links(parent=self.guide).second_guide_url)
             self.guid_dict[self.guid_label]=self.guid_content
 
        

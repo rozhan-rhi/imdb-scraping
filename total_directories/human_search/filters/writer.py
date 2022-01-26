@@ -22,6 +22,8 @@ class Writer_Info(Work_Info):
         self.writer_dict["activity"]=self.work_experience
         self.writer_dict["known-for"]=self.known_for
         self.writer_dict["expand "+self.activity]=self.movies
+        return self.writer_dict
+
 
     def writer_bio(self):
         """shows the biography of writer"""
@@ -31,3 +33,4 @@ class Writer_Info(Work_Info):
         self.writer_dict["overview"]= self.writer_overview
         self.writer_dict["family"]=self.writer_family
         self.writer_dict["salary"]=self.writer_salary
+        return self.writer_dict

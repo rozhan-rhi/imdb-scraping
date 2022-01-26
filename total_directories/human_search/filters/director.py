@@ -22,6 +22,7 @@ class Director_Info(Work_Info):
         self.director_dict["activity"]=self.work_experience
         self.director_dict["known-for"]=self.known_for
         self.director_dict["expand "+self.activity]=self.movies
+        return self.director_dict
 
     def director_bio(self):
         """shows the biography of director"""
@@ -31,3 +32,4 @@ class Director_Info(Work_Info):
         self.director_dict["overview"]= self.director_overview
         self.director_dict["family"]=self.director_family
         self.director_dict["salary"]=self.director_salary
+        return self.director_dict

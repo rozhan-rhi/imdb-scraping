@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from bs4.dammit import EncodingDetector
 from ..total_links.links import Link_Base
 
 
@@ -9,10 +10,14 @@ class Filter_Base :
     
     def parse_page(self,url) :
         """parse the url and save html text"""
-        self.url=url
-        self.response_=requests.get(self.url)
-        self.parse=BeautifulSoup(self.response_.text,"html.parser")
+        self.parser="html.parser"
+        self.req=requests.get(url)
+        self.http_encoding = self.req.encoding if 'charset' in self.req.headers.get('content-type',"").lower() else None
+        self.html_encoding = EncodingDetector.find_declared_encoding(self.req.content, is_html=True)
+        self.encoding=self.http_encoding or self.html_encoding
+        self.parse=BeautifulSoup(self.req.content,self.parser,from_encoding=self.encoding)
         return self.parse
+    
     
     
 

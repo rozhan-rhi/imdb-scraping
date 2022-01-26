@@ -1,6 +1,7 @@
 import requests 
 from bs4 import BeautifulSoup
 from bs4.dammit import EncodingDetector, encoding_res
+from .t_links import T_Links
 import re
 
 
@@ -31,7 +32,8 @@ class Central :
                 self.name_group.insert(0,"oscar")
                 
             self.regex="tt([0-9]+)"
-            self.link_group=f"https://www.imdb.com/search/title/?groups={'_'.join(self.name_group).replace('nominee','nominees')}"
+            self.ordering='_'.join(self.name_group).replace('nominee','nominees')
+            self.link_group=T_Links(group=self.ordering).link_group
             self.movie_group=[self.movie_name.text.strip().replace("X","") for self.movie_name in self.parse_page(self.link_group).find_all("a",href=True) if re.findall("tt([0-9]+)",self.movie_name['href'])]
             self.movie_group=list(filter(None,self.movie_group))
             self.WN_dict[' '.join(self.name_group)]=self.movie_group

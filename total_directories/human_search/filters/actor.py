@@ -21,6 +21,7 @@ class Actor_Info(Work_Info):
         self.actor_dict["activity"]=self.work_experience
         self.actor_dict["known-for"]=self.known_for
         self.actor_dict["expand "+self.activity]=self.movies
+        return self.actor_dict
 
     def actor_bio(self):
         """shows the biography of actor"""
@@ -30,3 +31,4 @@ class Actor_Info(Work_Info):
         self.actor_dict["overview"]= self.actor_overview
         self.actor_dict["family"]=self.actor_family
         self.actor_dict["salary"]=self.actor_salary
+        return self.actor_dict
