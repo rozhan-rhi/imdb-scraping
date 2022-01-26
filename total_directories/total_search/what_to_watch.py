@@ -20,7 +20,7 @@ class What_To_Watch() :
     
        
     
-    def guid(self) :
+    def guide(self) :
         self.guid_dict={}
         self.regex="ls([0-9]+)"
         self.page=self.parse_page(T_Links().guide_url)       
@@ -28,8 +28,8 @@ class What_To_Watch() :
         self.obj_Movies=Movies()
         for self.each_guid in self.watch_guid : 
             self.guid_label=self.each_guid.text
-            self.guide=self.each_guid.parent['href']
-            self.guid_content=self.obj_Movies.several_movie(T_Links(parent=self.guide).second_guide_url)
+            self.guide_link=self.each_guid.parent['href']
+            self.guid_content=self.obj_Movies.several_movie(T_Links(parent=self.guide_link).second_guide_url)
             self.guid_dict[self.guid_label]=self.guid_content
 
        

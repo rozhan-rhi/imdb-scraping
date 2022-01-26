@@ -32,3 +32,7 @@ from total_directories.human_search.filters import Actor_Info
 
 obj=What_To_Watch()
 print(obj.guide())
+
+
+# obj=Prizes()
+# print(obj.center())
