@@ -1,6 +1,7 @@
 from total_directories.filter_search.movies_based_information import Filters,Movies
 from total_directories.total_search import Celeb_New,Born_Today,Prizes,What_To_Watch
 from total_directories.human_search.filters import Actor_Info
+import pandas as pd
 # from imdbscraping.human_search.filters import *
 # import pandas as pd
 
@@ -20,7 +21,9 @@ from total_directories.human_search.filters import Actor_Info
 
 # obj=Movies()
 # print(obj.several_movie("https://www.imdb.com/search/title/?genres=comedy"))
-# print(obj.one_movie("https://www.imdb.com/search/title/?title=don't look up"))
+# obj2=obj.one_movie("https://www.imdb.com/search/title/?title=don't look up")
+# df=pd.DataFrame(obj2)
+# df.to_csv("save_information.csv")
 
 
 # obj=Born_Today()
@@ -30,8 +33,8 @@ from total_directories.human_search.filters import Actor_Info
 # obj=Actor_Info("brad pitt","actor")
 # print(obj())
 
-obj=What_To_Watch()
-print(obj.guide())
+# obj=What_To_Watch()
+# print(obj.guide())
 
 
 # obj=Prizes()
