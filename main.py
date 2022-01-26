@@ -2,6 +2,8 @@ from total_directories.filter_search.movies_based_information import Filters,Mov
 from total_directories.specific_search import Celeb_New,Born_Today,Prizes,What_To_Watch
 from total_directories.human_search.filters import Actor_Info,Director_Info,Writer_Info
 import pandas as pd
+
+
 """1.use this code to save information to save_file.csv     
         data=pd.DataFrame(data=obj.actor_bio())
         data.to_csv("save_file.csv")
